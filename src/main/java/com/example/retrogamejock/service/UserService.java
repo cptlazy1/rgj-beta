@@ -40,6 +40,7 @@ public class UserService {
         }
 
     }
+
     // Method to add user
     public UserDto addUser(UserInputDto userInputDto) {
         User user = convertToUser(userInputDto);
@@ -52,6 +53,30 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(userID);
         if (userOptional.isPresent()) {
             userRepository.deleteById(userID);
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userID");
+        }
+    }
+
+    // Method to update a user
+    public UserDto updateUser(Long userID, UserInputDto userInputDto) {
+
+        Optional<User> userOptional = userRepository.findById(userID);
+
+        if (userOptional.isPresent()) {
+
+            User user = userOptional.get();
+            // Update method works but only if all fields are filled in.
+            // If a field is empty, it will be updated to null.
+            user.setUserName(userInputDto.getUserName());
+            user.setPassword(userInputDto.getPassword());
+            user.setEmail(userInputDto.getEmail());
+            user.setProfileIsPrivate(userInputDto.isProfileIsPrivate());
+
+            User updatedUser = userRepository.save(user);
+
+            return convertToUserDto(updatedUser);
+
         } else {
             throw new RecordNotFoundException("No user record exists for given userID");
         }
