@@ -1,17 +1,14 @@
 package com.example.retrogamejock.dto;
-import jakarta.validation.constraints.*;
+
 
 // This class is used for PostMapping and PutMapping
 // User is given as body in Postman
-// Validation is done in this class
+// Validation is done in this class - How to do it?
 public class UserInputDto {
-//    @NotNull(message = "Username cannot be empty")
+    // ID is not necessary because it is auto-generated
     private String userName;
-//    @NotNull(message = "Password cannot be empty")
     private String password;
-//    @Email(message = "Email should be valid")
     private String email;
-//    @NotNull(message = "ProfileIsPrivate cannot be empty")
     private boolean profileIsPrivate;
 
     public String getUserName() {
