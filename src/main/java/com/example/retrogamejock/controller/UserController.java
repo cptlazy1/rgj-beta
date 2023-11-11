@@ -17,25 +17,32 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Getmapping to get all users
+    // GetMapping to get all users
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userDtos = userService.getAllUsers();
         return ResponseEntity.ok(userDtos);
     }
 
-    // Getmapping to get user by userID
+    // GetMapping to get user by userID
     @GetMapping("/users/{userID}")
     public ResponseEntity<UserDto> getUserByUserID(@PathVariable("userID") Long userID) {
         UserDto userDto = userService.getUserByUserID(userID);
         return ResponseEntity.ok(userDto);
     }
 
-    // Postmapping to add user
+    // PostMapping to add user
     @PostMapping("/users")
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserInputDto userInputDto) {
         UserDto userDto = userService.addUser(userInputDto);
         return ResponseEntity.created(null).body(userDto);
+    }
+
+    // DeleteMapping to delete user
+    @DeleteMapping("/users/{userID}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("userID") Long userID) {
+        userService.deleteUser(userID);
+        return ResponseEntity.noContent().build();
     }
 
 }

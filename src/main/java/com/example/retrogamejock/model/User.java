@@ -14,19 +14,6 @@ public class User {
     private String email;
     private boolean profileIsPrivate;
 
-    // Default constructor
-    public User() {
-    }
-
-    // Constructor
-    public User(String userName, String password, String email, boolean profileIsPrivate) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.profileIsPrivate = profileIsPrivate;
-    }
-
-
     // Getters and setters
     public Long getUserID() {
         return userID;

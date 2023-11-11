@@ -6,6 +6,7 @@ import com.example.retrogamejock.exception.RecordNotFoundException;
 import com.example.retrogamejock.model.User;
 import com.example.retrogamejock.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,16 @@ public class UserService {
         User user = convertToUser(userInputDto);
         User savedUser = userRepository.save(user);
         return convertToUserDto(savedUser);
+    }
+
+    // Method to delete a user
+    public void deleteUser(@RequestBody Long userID) {
+        Optional<User> userOptional = userRepository.findById(userID);
+        if (userOptional.isPresent()) {
+            userRepository.deleteById(userID);
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userID");
+        }
     }
 
     // Method to convert UserInputDto to User
