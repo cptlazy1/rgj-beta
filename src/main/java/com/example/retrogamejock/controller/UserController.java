@@ -46,7 +46,6 @@ public class UserController {
     }
 
     // PutMapping to update user
-    // It is not updating but creating a new user
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userID, @Valid @RequestBody UserInputDto userInputDto) {
         UserDto userDto = userService.updateUser(userID, userInputDto);
