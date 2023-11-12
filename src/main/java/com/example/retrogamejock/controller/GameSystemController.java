@@ -1,10 +1,11 @@
 package com.example.retrogamejock.controller;
 
 import com.example.retrogamejock.dto.GameSystemDto;
+import com.example.retrogamejock.dto.GameSystemInputDto;
 import com.example.retrogamejock.service.GameSystemService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +25,21 @@ public class GameSystemController {
         List<GameSystemDto> gameSystemDtos = gameSystemService.getAllGameSystems();
         return ResponseEntity.ok(gameSystemDtos);
     }
+
+    // GetMapping to get game system by gameSystemID
+    @GetMapping("/gamesystems/{id}")
+    public ResponseEntity<GameSystemDto> getGameSystemByGameSystemID(@PathVariable("id") Long gameSystemID) {
+        GameSystemDto gameSystemDto = gameSystemService.getGameSystemByGameSystemID(gameSystemID);
+        return ResponseEntity.ok(gameSystemDto);
+    }
+
+    // PostMapping to add game system
+    @PostMapping("/gamesystems")
+    public ResponseEntity<GameSystemDto> addGameSystem(@Valid @RequestBody GameSystemInputDto gameSystemInputDto) {
+        GameSystemDto gameSystemDto = gameSystemService.addGameSystem(gameSystemInputDto);
+        return ResponseEntity.created(null).body(gameSystemDto);
+    }
+
+
 
 }

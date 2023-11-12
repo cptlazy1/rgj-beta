@@ -1,12 +1,15 @@
 package com.example.retrogamejock.service;
 
 import com.example.retrogamejock.dto.GameSystemDto;
+import com.example.retrogamejock.dto.GameSystemInputDto;
+import com.example.retrogamejock.exception.RecordNotFoundException;
 import com.example.retrogamejock.model.GameSystem;
 import com.example.retrogamejock.repository.GameSystemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameSystemService {
@@ -27,15 +30,33 @@ public class GameSystemService {
         return gameSystemDtos;
     }
 
+    // Method to get game system by gameSystemID
+    public GameSystemDto getGameSystemByGameSystemID(Long gameSystemID) {
+        Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
+        if (gameSystemOptional.isPresent()) {
+            GameSystem gameSystem = gameSystemOptional.get();
+            return convertToGameSystemDto(gameSystem);
+        } else {
+            throw new RecordNotFoundException("No game system record exists for given gameSystemID");
+        }
+
+    }
+
+    // Method to add game system
+    public GameSystemDto addGameSystem(GameSystemInputDto gameSystemInputDto) {
+        GameSystem gameSystem = convertToGameSystem(gameSystemInputDto);
+        GameSystem savedGameSystem = gameSystemRepository.save(gameSystem);
+        return convertToGameSystemDto(savedGameSystem);
+    }
+
     // Method to convert GameSystemDto to GameSystem
-    private GameSystem convertToGameSystem(GameSystemDto gameSystemDto) {
+    private GameSystem convertToGameSystem(GameSystemInputDto gameSystemInputDto) {
 
         GameSystem gameSystem = new GameSystem();
 
-        gameSystem.setGameSystemID(gameSystemDto.getGameSystemID());
-        gameSystem.setGameSystemName(gameSystemDto.getGameSystemName());
-        gameSystem.setGameSystemReview(gameSystemDto.getGameSystemReview());
-        gameSystem.setGameSystemRating(gameSystemDto.getGameSystemRating());
+        gameSystem.setGameSystemName(gameSystemInputDto.getGameSystemName());
+        gameSystem.setGameSystemReview(gameSystemInputDto.getGameSystemReview());
+        gameSystem.setGameSystemRating(gameSystemInputDto.getGameSystemRating());
 
         return gameSystem;
     }
