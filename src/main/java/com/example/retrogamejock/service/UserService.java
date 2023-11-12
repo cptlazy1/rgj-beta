@@ -16,9 +16,11 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
+    // Constructor to inject UserRepository
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     // Method to get all users
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();

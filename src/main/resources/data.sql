@@ -22,3 +22,12 @@ VALUES ('Neo-Geo', 'the godfather', 3);
 
 INSERT INTO game_systems (game_system_name, game_system_review, game_system_rating)
 VALUES ('Playstation', 'top seller', 2);
+
+INSERT INTO games (game_name, game_review, game_rating)
+VALUES ('Sonic', 'fast', 3);
+
+INSERT INTO games (game_name, game_review, game_rating)
+VALUES ('Super Mario', 'fun', 3);
+
+INSERT INTO games (game_name, game_review, game_rating)
+VALUES ('Soul Calibur', 'fun', 3);
