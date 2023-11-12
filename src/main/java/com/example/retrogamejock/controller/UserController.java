@@ -39,16 +39,16 @@ public class UserController {
     }
 
     // DeleteMapping to delete user
-    @DeleteMapping("/users/{userID}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("userID") Long userID) {
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long userID) {
         userService.deleteUser(userID);
         return ResponseEntity.noContent().build();
     }
 
     // PutMapping to update user
     // It is not updating but creating a new user
-    @PutMapping("/users/{userID}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long userID, @Valid @RequestBody UserInputDto userInputDto) {
+    @PutMapping("/users/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userID, @Valid @RequestBody UserInputDto userInputDto) {
         UserDto userDto = userService.updateUser(userID, userInputDto);
         return ResponseEntity.ok().body(userDto);
     }

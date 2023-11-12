@@ -6,6 +6,7 @@ import com.example.retrogamejock.exception.RecordNotFoundException;
 import com.example.retrogamejock.model.GameSystem;
 import com.example.retrogamejock.repository.GameSystemRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,38 @@ public class GameSystemService {
         GameSystem gameSystem = convertToGameSystem(gameSystemInputDto);
         GameSystem savedGameSystem = gameSystemRepository.save(gameSystem);
         return convertToGameSystemDto(savedGameSystem);
+    }
+
+    // Method to delete a game system
+    public void deleteGameSystem(@RequestBody Long gameSystemID) {
+        Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
+        if (gameSystemOptional.isPresent()) {
+            gameSystemRepository.deleteById(gameSystemID);
+        } else {
+            throw new RecordNotFoundException("No game system record exists for given gameSystemID");
+        }
+    }
+
+    // Method to update a game system
+    public GameSystemDto updateGameSystem(Long gameSystemID, GameSystemInputDto gameSystemInputDto) {
+
+        Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
+
+        if (gameSystemOptional.isPresent()) {
+
+            GameSystem gameSystem = gameSystemOptional.get();
+
+            gameSystem.setGameSystemName(gameSystemInputDto.getGameSystemName());
+            gameSystem.setGameSystemReview(gameSystemInputDto.getGameSystemReview());
+            gameSystem.setGameSystemRating(gameSystemInputDto.getGameSystemRating());
+
+            GameSystem savedGameSystem = gameSystemRepository.save(gameSystem);
+
+            return convertToGameSystemDto(savedGameSystem);
+
+        } else {
+            throw new RecordNotFoundException("No game system record exists for given gameSystemID");
+        }
     }
 
     // Method to convert GameSystemDto to GameSystem

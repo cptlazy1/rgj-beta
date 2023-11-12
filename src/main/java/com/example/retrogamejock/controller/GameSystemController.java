@@ -40,6 +40,19 @@ public class GameSystemController {
         return ResponseEntity.created(null).body(gameSystemDto);
     }
 
+    // DeleteMapping to delete game system
+    @DeleteMapping("/gamesystems/{id}")
+    public ResponseEntity<Void> deleteGameSystem(@PathVariable("id") Long gameSystemID) {
+        gameSystemService.deleteGameSystem(gameSystemID);
+        return ResponseEntity.noContent().build();
+    }
+
+    // PutMapping to update game system
+    @PutMapping("/gamesystems/{id}")
+    public ResponseEntity<GameSystemDto> updateGameSystem(@PathVariable("id") Long gameSystemID, @Valid @RequestBody GameSystemInputDto gameSystemInputDto) {
+        GameSystemDto gameSystemDto = gameSystemService.updateGameSystem(gameSystemID, gameSystemInputDto);
+        return ResponseEntity.ok().body(gameSystemDto);
+    }
 
 
 }
