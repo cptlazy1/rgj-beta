@@ -52,4 +52,18 @@ public class UserController {
         return ResponseEntity.ok().body(userDto);
     }
 
+    // PutMapping to assign game to user
+    @PutMapping("/users/{userID}/games/{gameID}")
+    public ResponseEntity<UserDto> assignGameToUser(@PathVariable("userID") Long userID, @PathVariable("gameID") Long gameID) {
+        UserDto userDto = userService.assignGameToUser(userID, gameID);
+        return ResponseEntity.ok().body(userDto);
+    }
+
+    // PutMapping to assign game system to user
+    @PutMapping("/users/{userID}/game-systems/{gameSystemID}")
+    public ResponseEntity<UserDto> assignGameSystemToUser(@PathVariable("userID") Long userID, @PathVariable("gameSystemID") Long gameSystemID) {
+        UserDto userDto = userService.assignGameSystemToUser(userID, gameSystemID);
+        return ResponseEntity.ok().body(userDto);
+    }
+
 }

@@ -2,6 +2,8 @@ package com.example.retrogamejock.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "game_systems")
 public class GameSystem {
@@ -11,6 +13,12 @@ public class GameSystem {
     private String gameSystemName;
     private String gameSystemReview;
     private char gameSystemRating;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
 
     // Getters and setters
     public Long getGameSystemID() {
@@ -43,5 +51,13 @@ public class GameSystem {
 
     public void setGameSystemRating(char gameSystemRating) {
         this.gameSystemRating = gameSystemRating;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

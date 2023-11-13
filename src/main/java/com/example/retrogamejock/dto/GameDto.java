@@ -6,6 +6,8 @@ public class GameDto {
     private String gameReview;
     private char gameRating;
 
+
+
     public Long getGameID() {
         return gameID;
     }

@@ -1,9 +1,14 @@
 package com.example.retrogamejock.service;
 
+import com.example.retrogamejock.dto.GameDto;
 import com.example.retrogamejock.dto.UserDto;
 import com.example.retrogamejock.dto.UserInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
+import com.example.retrogamejock.model.Game;
+import com.example.retrogamejock.model.GameSystem;
 import com.example.retrogamejock.model.User;
+import com.example.retrogamejock.repository.GameRepository;
+import com.example.retrogamejock.repository.GameSystemRepository;
 import com.example.retrogamejock.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +20,15 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final GameRepository gameRepository;
+
+    private final GameSystemRepository gameSystemRepository;
 
     // Constructor to inject UserRepository
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, GameRepository gameRepository, GameSystemRepository gameSystemRepository) {
         this.userRepository = userRepository;
+        this.gameRepository = gameRepository;
+        this.gameSystemRepository = gameSystemRepository;
     }
 
     // Method to get all users
@@ -110,4 +120,51 @@ public class UserService {
 
         return userDto;
     }
+
+    // Method to assign a game to a user
+    public UserDto assignGameToUser(Long userID, Long gameID) {
+
+        Optional<User> userOptional = userRepository.findById(userID);
+        Optional<Game> gameOptional = gameRepository.findById(gameID);
+
+        if (userOptional.isPresent() && gameOptional.isPresent()) {
+
+            User user = userOptional.get();
+            Game game = gameOptional.get();
+
+            user.getGames().add(game);
+            game.setUser(user);
+
+            User savedUser = userRepository.save(user);
+
+            return convertToUserDto(savedUser);
+
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userID");
+        }
+    }
+
+    // Method to assign a game system to a user
+    public UserDto assignGameSystemToUser(Long userID, Long gameSystemID) {
+
+        Optional<User> userOptional = userRepository.findById(userID);
+        Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
+
+        if (userOptional.isPresent() && gameSystemOptional.isPresent()) {
+
+            User user = userOptional.get();
+            GameSystem gameSystem = gameSystemOptional.get();
+
+            user.getGameSystems().add(gameSystem);
+            gameSystem.setUser(user);
+
+            User savedUser = userRepository.save(user);
+
+            return convertToUserDto(savedUser);
+
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userID");
+        }
+    }
+
 }

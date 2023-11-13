@@ -31,3 +31,9 @@ VALUES ('Super Mario', 'fun', 3);
 
 INSERT INTO games (game_name, game_review, game_rating)
 VALUES ('Soul Calibur', 'fun', 3);
+
+INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
+VALUES (true, true, true);
+
+INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
+VALUES (false, true, false);
