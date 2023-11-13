@@ -2,22 +2,20 @@ package com.example.retrogamejock.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "game_conditions")
 public class GameCondition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "game_condition_id")
     private Long gameConditionID;
     private boolean isCompleteInBox;
     private boolean hasManual;
     private boolean hasCase;
 
 
-    @OneToOne
+    @OneToOne(mappedBy = "gameCondition")
     private Game game;
-
 
     // Getters and setters
     public Long getGameConditionID() {
@@ -54,4 +52,8 @@ public class GameCondition {
 
     public void setGameCondition(Game game) {
     }
+
+
+
+
 }

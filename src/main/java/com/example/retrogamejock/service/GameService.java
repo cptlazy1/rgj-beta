@@ -4,7 +4,10 @@ import com.example.retrogamejock.dto.GameDto;
 import com.example.retrogamejock.dto.GameInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
 import com.example.retrogamejock.model.Game;
+import com.example.retrogamejock.model.GameCondition;
+import com.example.retrogamejock.repository.GameConditionRepository;
 import com.example.retrogamejock.repository.GameRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,10 +19,12 @@ import java.util.Optional;
 @Service
 public class GameService {
     private final GameRepository gameRepository;
+    private final GameConditionRepository gameConditionRepository;
 
     // Constructor to inject GameRepository
-    public GameService(GameRepository gameRepository) {
+    public GameService(GameRepository gameRepository, GameConditionRepository gameConditionRepository) {
         this.gameRepository = gameRepository;
+        this.gameConditionRepository = gameConditionRepository;
     }
 
     // Add method to get all games
@@ -165,5 +170,55 @@ public class GameService {
 
         return gameDto;
     }
+
+//    // Method to assign gameCondition to game
+//    public void assignGameConditionToGame(Long gameID, Long gameConditionID) {
+//
+//        Optional<Game> gameOptional = gameRepository.findById(gameID);
+//        Optional<GameCondition> gameConditionOptional = gameConditionRepository.findById(gameConditionID);
+//
+//        if (gameOptional.isPresent() && gameConditionOptional.isPresent()) {
+//
+//            Game game = gameOptional.get();
+//            GameCondition gameCondition = gameConditionOptional.get();
+//
+////            game.getGameCondition().add(gameCondition);
+//
+//            gameCondition.setGame(game);
+//            gameRepository.save(game);
+//
+//
+//
+//        } else {
+//            throw new RecordNotFoundException("No game record exists for given gameID");
+//        }
+//    }
+
+    // Write a method to assign gameCondition to game
+    @Transactional
+    public void assignGameConditionToGame(Long gameID, Long gameConditionID) {
+
+        Optional<Game> gameOptional = gameRepository.findById(gameID);
+        Optional<GameCondition> gameConditionOptional = gameConditionRepository.findById(gameConditionID);
+
+        if (gameOptional.isPresent() && gameConditionOptional.isPresent()) {
+
+            Game game = gameOptional.get();
+            GameCondition gameCondition = gameConditionOptional.get();
+
+            game.setGameCondition(gameCondition);
+            gameRepository.save(game);
+
+        } else {
+            throw new RecordNotFoundException("No game record exists for given gameID");
+        }
+
+
+    }
+
+
+
+
+
 
 }

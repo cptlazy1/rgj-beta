@@ -1,5 +1,6 @@
 package com.example.retrogamejock.controller;
 
+import com.example.retrogamejock.dto.GameConditionDto;
 import com.example.retrogamejock.dto.GameInputDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,6 +53,21 @@ public class GameController {
         GameDto gameDto = gameService.updateGame(gameID, gameInputDto);
         return ResponseEntity.ok().body(gameDto);
     }
+
+    // TODO: assigning gameCondition to game doesn't work yet. Fix please
+    // PutMapping to assign gameCondition to game
+    @PutMapping("/games/{gameID}/game-conditions/{gameConditionID}")
+    public ResponseEntity<String> assignGameConditionToGame(@PathVariable("gameID") Long gameID, @PathVariable("gameConditionID") Long gameConditionID) {
+        gameService.assignGameConditionToGame(gameID, gameConditionID);
+        return ResponseEntity.ok().body("GameCondition with the " + gameConditionID + " ID has been assigned to game with the " + gameID + " ID.");
+    }
+
+//    // PutMapping to assign gameCondition to game using @PathVariable and @RequestBody
+//    @PutMapping("/games/{gameID}/game-conditions")
+//    public ResponseEntity<String> assignGameConditionToGame(@PathVariable("gameID") Long gameID, @RequestBody GameConditionDto gameConditionDto) {
+//        gameService.assignGameConditionToGame(gameID, gameConditionDto.getGameConditionID());
+//        return ResponseEntity.ok().body("GameCondition with the " + gameConditionDto.getGameConditionID() + " ID has been assigned to game with the " + gameID + " ID.");
+//    }
 
 
 }

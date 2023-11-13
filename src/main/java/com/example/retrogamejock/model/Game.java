@@ -2,14 +2,13 @@ package com.example.retrogamejock.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 
 @Entity
 @Table(name = "games")
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "game_id")
     private Long gameID;
     private String gameName;
     private String gameReview;
@@ -19,12 +18,8 @@ public class Game {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    @OneToOne(mappedBy = "game", cascade = CascadeType.ALL)
-    @JoinColumn(name = "game_condition_id")
+    @OneToOne
     private GameCondition gameCondition;
-
-
 
     // Getters and setters
     public Long getGameID() {
@@ -68,14 +63,7 @@ public class Game {
         this.user = user;
     }
 
-
-    public GameCondition getGameCondition() {
-        return gameCondition;
-    }
-
     public void setGameCondition(GameCondition gameCondition) {
+        this.gameCondition = gameCondition;
     }
-
-
-
 }

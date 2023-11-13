@@ -52,29 +52,6 @@ public class GameConditionService {
         return gameConditionDto;
     }
 
-    // Method to assign gameCondition to game
-    public void assignGameConditionToGame(Long gameID, Long gameConditionID) {
-
-        Optional<Game> gameOptional = gameRepository.findById(gameID);
-        Optional<GameCondition> gameConditionOptional = gameConditionRepository.findById(gameConditionID);
-
-        if (gameOptional.isPresent() && gameConditionOptional.isPresent()) {
-
-            Game game = gameOptional.get();
-            GameCondition gameCondition = gameConditionOptional.get();
-
-            game.setGameCondition(gameCondition);
-            gameRepository.save(game);
-
-
-
-        } else {
-            throw new RecordNotFoundException("No game record exists for given gameID");
-        }
-    }
-
-
-
 
 
 

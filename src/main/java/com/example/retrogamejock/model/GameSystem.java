@@ -9,6 +9,7 @@ import java.util.List;
 public class GameSystem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "game_system_id")
     Long gameSystemID;
     private String gameSystemName;
     private String gameSystemReview;
