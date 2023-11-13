@@ -38,11 +38,11 @@ VALUES ('Soul Calibur', 'fun', '1');
 
 
 
-INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
+INSERT INTO game_conditions (is_complete_in_box, has_manual, has_case)
 VALUES (true, true, true);
 
-INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
+INSERT INTO game_conditions (is_complete_in_box, has_manual, has_case)
 VALUES (false, true, false);
 
-INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
+INSERT INTO game_conditions (is_complete_in_box, has_manual, has_case)
 VALUES (true, true, false);

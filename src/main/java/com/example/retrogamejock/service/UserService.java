@@ -1,7 +1,5 @@
 package com.example.retrogamejock.service;
 
-import com.example.retrogamejock.dto.GameDto;
-import com.example.retrogamejock.dto.GameInputDto;
 import com.example.retrogamejock.dto.UserDto;
 import com.example.retrogamejock.dto.UserInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
@@ -23,7 +21,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
-
     private final GameSystemRepository gameSystemRepository;
 
     // Constructor to inject UserRepository
@@ -43,6 +40,7 @@ public class UserService {
         }
         return userDtos;
     }
+
     // Method to get user by userID
     public UserDto getUserByUserID(Long userID) {
         Optional<User> userOptional = userRepository.findById(userID);
@@ -147,7 +145,9 @@ public class UserService {
     // Method to assign a game to a user
     // This method works, but it is not ideal.
     // It is not ideal because it is overwriting the existing game.
-    public UserDto assignGameToUser(Long userID, Long gameID) {
+
+
+    public void assignGameToUser(Long userID, Long gameID) {
 
         Optional<User> userOptional = userRepository.findById(userID);
         Optional<Game> gameOptional = gameRepository.findById(gameID);
@@ -158,11 +158,9 @@ public class UserService {
             Game game = gameOptional.get();
 
             user.getGames().add(game);
+
             game.setUser(user);
-
-            User savedUser = userRepository.save(user);
-
-            return convertToUserDto(savedUser);
+            userRepository.save(user);
 
         } else {
             throw new RecordNotFoundException("No user record exists for given userID");
@@ -170,7 +168,7 @@ public class UserService {
     }
 
     // Method to assign a game system to a user
-    public UserDto assignGameSystemToUser(Long userID, Long gameSystemID) {
+    public void assignGameSystemToUser(Long userID, Long gameSystemID) {
 
         Optional<User> userOptional = userRepository.findById(userID);
         Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
@@ -183,9 +181,9 @@ public class UserService {
             user.getGameSystems().add(gameSystem);
             gameSystem.setUser(user);
 
-            User savedUser = userRepository.save(user);
+            userRepository.save(user);
 
-            return convertToUserDto(savedUser);
+
 
         } else {
             throw new RecordNotFoundException("No user record exists for given userID");

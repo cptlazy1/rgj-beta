@@ -1,22 +1,11 @@
-package com.example.retrogamejock.model;
+package com.example.retrogamejock.dto;
 
-import jakarta.persistence.*;
+public class GameConditionDto {
 
-import java.util.List;
-
-@Entity
-@Table(name = "game_conditions")
-public class GameCondition {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gameConditionID;
     private boolean isCompleteInBox;
     private boolean hasManual;
     private boolean hasCase;
-
-
-    @OneToOne
-    private Game game;
 
 
     // Getters and setters
@@ -50,8 +39,5 @@ public class GameCondition {
 
     public void setHasCase(boolean hasCase) {
         this.hasCase = hasCase;
-    }
-
-    public void setGameCondition(Game game) {
     }
 }

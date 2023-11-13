@@ -2,6 +2,8 @@ package com.example.retrogamejock.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "games")
@@ -13,12 +15,13 @@ public class Game {
     private String gameReview;
     private String gameRating;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+
+    @OneToOne(mappedBy = "game", cascade = CascadeType.ALL)
+    @JoinColumn(name = "game_condition_id")
     private GameCondition gameCondition;
 
 
@@ -64,4 +67,15 @@ public class Game {
     public void setUser(User user) {
         this.user = user;
     }
+
+
+    public GameCondition getGameCondition() {
+        return gameCondition;
+    }
+
+    public void setGameCondition(GameCondition gameCondition) {
+    }
+
+
+
 }
