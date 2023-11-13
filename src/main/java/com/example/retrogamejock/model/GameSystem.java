@@ -12,7 +12,7 @@ public class GameSystem {
     Long gameSystemID;
     private String gameSystemName;
     private String gameSystemReview;
-    private char gameSystemRating;
+    private String gameSystemRating;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -45,11 +45,11 @@ public class GameSystem {
         this.gameSystemReview = gameSystemReview;
     }
 
-    public char getGameSystemRating() {
+    public String getGameSystemRating() {
         return gameSystemRating;
     }
 
-    public void setGameSystemRating(char gameSystemRating) {
+    public void setGameSystemRating(String gameSystemRating) {
         this.gameSystemRating = gameSystemRating;
     }
 

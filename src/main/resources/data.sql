@@ -14,6 +14,8 @@ VALUES ('powerpuff', 'password', 'pp@lazy.com', true);
 INSERT INTO users (user_name, password, email, profile_is_private)
 VALUES ('haze', 'password', 'haze@lazy.com', true);
 
+
+
 INSERT INTO game_systems (game_system_name, game_system_review, game_system_rating)
 VALUES ('Dreamcast', 'very good', 3);
 
@@ -23,17 +25,24 @@ VALUES ('Neo-Geo', 'the godfather', 3);
 INSERT INTO game_systems (game_system_name, game_system_review, game_system_rating)
 VALUES ('Playstation', 'top seller', 2);
 
-INSERT INTO games (game_name, game_review, game_rating)
-VALUES ('Sonic', 'fast', 3);
+
 
 INSERT INTO games (game_name, game_review, game_rating)
-VALUES ('Super Mario', 'fun', 3);
+VALUES ('Sonic', 'fast', '3');
 
 INSERT INTO games (game_name, game_review, game_rating)
-VALUES ('Soul Calibur', 'fun', 3);
+VALUES ('Super Mario', 'fun', '2');
+
+INSERT INTO games (game_name, game_review, game_rating)
+VALUES ('Soul Calibur', 'fun', '1');
+
+
 
 INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
 VALUES (true, true, true);
 
 INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
 VALUES (false, true, false);
+
+INSERT INTO game_condition (is_complete_in_box, has_manual, has_case)
+VALUES (true, true, false);

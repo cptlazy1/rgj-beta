@@ -7,6 +7,7 @@ package com.example.retrogamejock.dto;
 
 public class UserInputDto {
     // ID is not necessary because it is auto-generated
+    // TODO: Add validation
     private String userName;
     private String password;
     private String email;

@@ -1,10 +1,14 @@
 package com.example.retrogamejock.service;
 
+import com.example.retrogamejock.dto.GameDto;
+import com.example.retrogamejock.dto.GameInputDto;
 import com.example.retrogamejock.dto.GameSystemDto;
 import com.example.retrogamejock.dto.GameSystemInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
+import com.example.retrogamejock.model.Game;
 import com.example.retrogamejock.model.GameSystem;
 import com.example.retrogamejock.repository.GameSystemRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -60,27 +64,49 @@ public class GameSystemService {
         }
     }
 
-    // Method to update a game system
-    public GameSystemDto updateGameSystem(Long gameSystemID, GameSystemInputDto gameSystemInputDto) {
+//    // Method to update a game system
+//    public GameSystemDto updateGameSystem(Long gameSystemID, GameSystemInputDto gameSystemInputDto) {
+//
+//        Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
+//
+//        if (gameSystemOptional.isPresent()) {
+//
+//            GameSystem gameSystem = gameSystemOptional.get();
+//
+//            gameSystem.setGameSystemName(gameSystemInputDto.getGameSystemName());
+//            gameSystem.setGameSystemReview(gameSystemInputDto.getGameSystemReview());
+//            gameSystem.setGameSystemRating(gameSystemInputDto.getGameSystemRating());
+//
+//            GameSystem savedGameSystem = gameSystemRepository.save(gameSystem);
+//
+//            return convertToGameSystemDto(savedGameSystem);
+//
+//        } else {
+//            throw new RecordNotFoundException("No game system record exists for given gameSystemID");
+//        }
+//    }
 
+    // ModelMapper version of updateGameSystem
+    public GameSystemDto updateGameSystem(Long gameSystemID, GameSystemInputDto gameSystemInputDto) {
         Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
 
         if (gameSystemOptional.isPresent()) {
-
             GameSystem gameSystem = gameSystemOptional.get();
 
-            gameSystem.setGameSystemName(gameSystemInputDto.getGameSystemName());
-            gameSystem.setGameSystemReview(gameSystemInputDto.getGameSystemReview());
-            gameSystem.setGameSystemRating(gameSystemInputDto.getGameSystemRating());
+            // Use ModelMapper to automatically update non-null fields
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.getConfiguration().setSkipNullEnabled(true);
+            modelMapper.map(gameSystemInputDto, gameSystem);
 
+            // Save the updated game
             GameSystem savedGameSystem = gameSystemRepository.save(gameSystem);
 
             return convertToGameSystemDto(savedGameSystem);
-
         } else {
-            throw new RecordNotFoundException("No game system record exists for given gameSystemID");
+            throw new RecordNotFoundException("No game record exists for the given gameID");
         }
     }
+
 
     // Method to convert GameSystemDto to GameSystem
     private GameSystem convertToGameSystem(GameSystemInputDto gameSystemInputDto) {

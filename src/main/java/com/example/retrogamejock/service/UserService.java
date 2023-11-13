@@ -1,6 +1,7 @@
 package com.example.retrogamejock.service;
 
 import com.example.retrogamejock.dto.GameDto;
+import com.example.retrogamejock.dto.GameInputDto;
 import com.example.retrogamejock.dto.UserDto;
 import com.example.retrogamejock.dto.UserInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
@@ -10,6 +11,7 @@ import com.example.retrogamejock.model.User;
 import com.example.retrogamejock.repository.GameRepository;
 import com.example.retrogamejock.repository.GameSystemRepository;
 import com.example.retrogamejock.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -70,27 +72,48 @@ public class UserService {
         }
     }
 
-    // Method to update a user
-    public UserDto updateUser(Long userID, UserInputDto userInputDto) {
+//    // Method to update a user
+//    public UserDto updateUser(Long userID, UserInputDto userInputDto) {
+//
+//        Optional<User> userOptional = userRepository.findById(userID);
+//
+//        if (userOptional.isPresent()) {
+//
+//            User user = userOptional.get();
+//            // Update method works but only if all fields are filled in.
+//            // If a field is empty, it will be updated to null.
+//            user.setUserName(userInputDto.getUserName());
+//            user.setPassword(userInputDto.getPassword());
+//            user.setEmail(userInputDto.getEmail());
+//            user.setProfileIsPrivate(userInputDto.isProfileIsPrivate());
+//
+//            User updatedUser = userRepository.save(user);
+//
+//            return convertToUserDto(updatedUser);
+//
+//        } else {
+//            throw new RecordNotFoundException("No user record exists for given userID");
+//        }
+//    }
 
+    // ModelMapper version of updateUser
+    public UserDto updateUser(Long userID, UserInputDto userInputDto) {
         Optional<User> userOptional = userRepository.findById(userID);
 
         if (userOptional.isPresent()) {
-
             User user = userOptional.get();
-            // Update method works but only if all fields are filled in.
-            // If a field is empty, it will be updated to null.
-            user.setUserName(userInputDto.getUserName());
-            user.setPassword(userInputDto.getPassword());
-            user.setEmail(userInputDto.getEmail());
-            user.setProfileIsPrivate(userInputDto.isProfileIsPrivate());
 
-            User updatedUser = userRepository.save(user);
+            // Use ModelMapper to automatically update non-null fields
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.getConfiguration().setSkipNullEnabled(true);
+            modelMapper.map(userInputDto, user);
 
-            return convertToUserDto(updatedUser);
+            // Save the updated game
+            User savedUser = userRepository.save(user);
 
+            return convertToUserDto(savedUser);
         } else {
-            throw new RecordNotFoundException("No user record exists for given userID");
+            throw new RecordNotFoundException("No game record exists for the given gameID");
         }
     }
 

@@ -4,10 +4,10 @@ package com.example.retrogamejock.dto;
 // User is given as body in Postman
 public class GameSystemInputDto {
 
-    // TO DO: Add validation
+    // TODO: Add validation
     private String gameSystemName;
     private String gameSystemReview;
-    private char gameSystemRating;
+    private String gameSystemRating;
 
     // Getters and setters
     public String getGameSystemName() {
@@ -26,11 +26,11 @@ public class GameSystemInputDto {
         this.gameSystemReview = gameSystemReview;
     }
 
-    public char getGameSystemRating() {
+    public String getGameSystemRating() {
         return gameSystemRating;
     }
 
-    public void setGameSystemRating(char gameSystemRating) {
+    public void setGameSystemRating(String gameSystemRating) {
         this.gameSystemRating = gameSystemRating;
     }
 }

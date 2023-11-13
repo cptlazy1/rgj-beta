@@ -4,7 +4,7 @@ public class GameSystemDto {
     public Long gameSystemID;
     public String gameSystemName;
     public String gameSystemReview;
-    public char gameSystemRating;
+    public String gameSystemRating;
 
     // Getters and setters
 
@@ -32,11 +32,11 @@ public class GameSystemDto {
         this.gameSystemReview = gameSystemReview;
     }
 
-    public char getGameSystemRating() {
+    public String getGameSystemRating() {
         return gameSystemRating;
     }
 
-    public void setGameSystemRating(char gameSystemRating) {
+    public void setGameSystemRating(String gameSystemRating) {
         this.gameSystemRating = gameSystemRating;
     }
 }
