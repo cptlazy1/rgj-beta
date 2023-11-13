@@ -52,7 +52,4 @@ public class GameConditionService {
         return gameConditionDto;
     }
 
-
-
-
 }

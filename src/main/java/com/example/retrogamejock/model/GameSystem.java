@@ -19,8 +19,6 @@ public class GameSystem {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-
     // Getters and setters
     public Long getGameSystemID() {
         return gameSystemID;

@@ -1,6 +1,5 @@
 package com.example.retrogamejock.controller;
 
-
 import com.example.retrogamejock.exception.RecordNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

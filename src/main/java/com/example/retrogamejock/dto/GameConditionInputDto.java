@@ -7,9 +7,19 @@ public class GameConditionInputDto {
     private boolean hasManual;
     private boolean hasCase;
 
-    public boolean isCompleteInBox() {
-        return isCompleteInBox;
+    // Default constructor
+    public GameConditionInputDto() {
     }
+
+    // Constructor
+    public GameConditionInputDto(boolean isCompleteInBox, boolean hasManual, boolean hasCase) {
+        this.isCompleteInBox = isCompleteInBox;
+        this.hasManual = hasManual;
+        this.hasCase = hasCase;
+    }
+
+    // Getters and setters
+    public boolean isCompleteInBox() {return isCompleteInBox;}
 
     public void setCompleteInBox(boolean completeInBox) {
         isCompleteInBox = completeInBox;

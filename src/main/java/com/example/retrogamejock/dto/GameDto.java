@@ -6,8 +6,23 @@ public class GameDto {
     private String gameReview;
     private String gameRating;
 
+    // Default constructor
+    public GameDto() {
+    }
 
+    // Constructor
+    public GameDto(
+            Long gameID,
+            String gameName,
+            String gameReview,
+            String gameRating) {
+        this.gameID = gameID;
+        this.gameName = gameName;
+        this.gameReview = gameReview;
+        this.gameRating = gameRating;
+    }
 
+    // Getters and setters
     public Long getGameID() {
         return gameID;
     }

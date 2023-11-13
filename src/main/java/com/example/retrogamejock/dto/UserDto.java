@@ -7,9 +7,25 @@ public class UserDto {
     private String email;
     private boolean profileIsPrivate;
 
-    public Long getUserID() {
-        return userID;
+    // Default constructor
+    public UserDto() {
     }
+
+    // Constructor
+    public UserDto(
+            Long userID,
+            String userName,
+            String password,
+            String email,
+            boolean profileIsPrivate) {
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.profileIsPrivate = profileIsPrivate;
+    }
+
+    public Long getUserID() {return userID;}
 
     public void setUserID(Long userID) {
         this.userID = userID;

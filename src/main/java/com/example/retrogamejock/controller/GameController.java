@@ -54,7 +54,7 @@ public class GameController {
         return ResponseEntity.ok().body(gameDto);
     }
 
-    // TODO: assigning gameCondition to game doesn't work yet. Fix please
+
     // PutMapping to assign gameCondition to game
     @PutMapping("/games/{gameID}/game-conditions/{gameConditionID}")
     public ResponseEntity<String> assignGameConditionToGame(@PathVariable("gameID") Long gameID, @PathVariable("gameConditionID") Long gameConditionID) {

@@ -9,6 +9,7 @@ import com.example.retrogamejock.model.User;
 import com.example.retrogamejock.repository.GameRepository;
 import com.example.retrogamejock.repository.GameSystemRepository;
 import com.example.retrogamejock.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -145,8 +146,8 @@ public class UserService {
     // Method to assign a game to a user
     // This method works, but it is not ideal.
     // It is not ideal because it is overwriting the existing game.
-
-
+    // TODO: Fix this method so it doesn't overwrite the existing game or user
+    @Transactional
     public void assignGameToUser(Long userID, Long gameID) {
 
         Optional<User> userOptional = userRepository.findById(userID);
@@ -168,6 +169,8 @@ public class UserService {
     }
 
     // Method to assign a game system to a user
+    // TODO: Fix this method so it doesn't overwrite the existing game system or user
+    @Transactional
     public void assignGameSystemToUser(Long userID, Long gameSystemID) {
 
         Optional<User> userOptional = userRepository.findById(userID);
@@ -182,8 +185,6 @@ public class UserService {
             gameSystem.setUser(user);
 
             userRepository.save(user);
-
-
 
         } else {
             throw new RecordNotFoundException("No user record exists for given userID");

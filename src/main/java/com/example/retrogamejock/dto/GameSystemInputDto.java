@@ -1,13 +1,17 @@
 package com.example.retrogamejock.dto;
 
 // This class is used for PostMapping and PutMapping
-// User is given as body in Postman
+
 public class GameSystemInputDto {
 
     // TODO: Add validation
     private String gameSystemName;
     private String gameSystemReview;
     private String gameSystemRating;
+
+    // Default constructor
+    public GameSystemInputDto() {
+    }
 
     // Getters and setters
     public String getGameSystemName() {

@@ -2,7 +2,6 @@ package com.example.retrogamejock.model;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "games")
 public class Game {

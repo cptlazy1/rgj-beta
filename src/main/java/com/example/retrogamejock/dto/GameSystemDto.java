@@ -6,8 +6,11 @@ public class GameSystemDto {
     public String gameSystemReview;
     public String gameSystemRating;
 
-    // Getters and setters
+    // Default constructor
+    public GameSystemDto() {
+    }
 
+    // Getters and setters
     public Long getGameSystemID() {
         return gameSystemID;
     }

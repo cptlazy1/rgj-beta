@@ -2,8 +2,6 @@ package com.example.retrogamejock.dto;
 
 
 // This class is used for PostMapping and PutMapping
-// User is given as body in Postman
-// Validation is done in this class - How to do it?
 
 public class UserInputDto {
     // ID is not necessary because it is auto-generated
@@ -12,6 +10,23 @@ public class UserInputDto {
     private String password;
     private String email;
     private boolean profileIsPrivate;
+
+    // Default constructor
+    public UserInputDto() {
+    }
+
+    // Constructor
+    public UserInputDto(
+            String userName,
+            String password,
+            String email,
+            boolean profileIsPrivate) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.profileIsPrivate = profileIsPrivate;
+    }
+
 
     public String getUserName() {
         return userName;
