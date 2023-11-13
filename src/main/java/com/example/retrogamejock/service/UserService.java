@@ -122,6 +122,8 @@ public class UserService {
     }
 
     // Method to assign a game to a user
+    // This method works, but it is not ideal.
+    // It is not ideal because it is overwriting the existing game.
     public UserDto assignGameToUser(Long userID, Long gameID) {
 
         Optional<User> userOptional = userRepository.findById(userID);

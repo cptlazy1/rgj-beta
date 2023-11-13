@@ -5,6 +5,7 @@ import com.example.retrogamejock.dto.GameInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
 import com.example.retrogamejock.model.Game;
 import com.example.retrogamejock.repository.GameRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -21,7 +22,6 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    // TODO: Add methods to create, read, update, and delete games
     // Add method to get all games
     public List<GameDto> getAllGames() {
         List<Game> games = gameRepository.findAll();
@@ -64,27 +64,81 @@ public class GameService {
     }
 
 
-    // Add method to update game
-    public GameDto updateGame(Long gameID, GameInputDto gameInputDto) {
+//    // Add method to update game
+//    public GameDto updateGame(Long gameID, GameInputDto gameInputDto) {
+//
+//        Optional<Game> gameOptional = gameRepository.findById(gameID);
+//
+//        if (gameOptional.isPresent()) {
+//
+//            Game game = gameOptional.get();
+//
+//            game.setGameName(gameInputDto.getGameName());
+//            game.setGameReview(gameInputDto.getGameReview());
+//            game.setGameRating(gameInputDto.getGameRating());
+//
+//            Game savedGame = gameRepository.save(game);
+//
+//            return convertToGameDto(savedGame);
+//
+//        } else {
+//            throw new RecordNotFoundException("No game record exists for given gameID");
+//        }
+//    }
 
+
+    // ModelMapper version of updateGame it updates all the fields now that I changed the
+    // gameRating field in the Game, GameDto and GameInputDto to a String from char.
+    // char is a primitive type and can't be null. String is an object and can be null.
+    public GameDto updateGame(Long gameID, GameInputDto gameInputDto) {
         Optional<Game> gameOptional = gameRepository.findById(gameID);
 
         if (gameOptional.isPresent()) {
-
             Game game = gameOptional.get();
 
-            game.setGameName(gameInputDto.getGameName());
-            game.setGameReview(gameInputDto.getGameReview());
-            game.setGameRating(gameInputDto.getGameRating());
+            // Use ModelMapper to automatically update non-null fields
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.getConfiguration().setSkipNullEnabled(true);
+            modelMapper.map(gameInputDto, game);
 
+            // Save the updated game
             Game savedGame = gameRepository.save(game);
 
             return convertToGameDto(savedGame);
-
         } else {
-            throw new RecordNotFoundException("No game record exists for given gameID");
+            throw new RecordNotFoundException("No game record exists for the given gameID");
         }
     }
+
+//    // This method works but it's not very efficient
+//    public GameDto updateGame(Long gameID, GameInputDto gameInputDto) {
+//        Optional<Game> gameOptional = gameRepository.findById(gameID);
+//
+//        if (gameOptional.isPresent()) {
+//            Game game = gameOptional.get();
+//
+//            // Update only the fields that are present in the DTO
+//            if (gameInputDto.getGameName() != null) {
+//                game.setGameName(gameInputDto.getGameName());
+//            }
+//
+//            if (gameInputDto.getGameReview() != null) {
+//                game.setGameReview(gameInputDto.getGameReview());
+//            }
+//
+//            if (gameInputDto.getGameRating() != null) {
+//                game.setGameRating(gameInputDto.getGameRating());
+//            }
+//
+//            // Save the updated game
+//            Game savedGame = gameRepository.save(game);
+//
+//            return convertToGameDto(savedGame);
+//        } else {
+//            throw new RecordNotFoundException("No game record exists for the given gameID");
+//        }
+//    }
+
 
 
     // Add method to convert GameInputDto to Game

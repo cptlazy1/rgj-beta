@@ -2,9 +2,10 @@ package com.example.retrogamejock.dto;
 
 public class GameInputDto {
 
+    // TODO: Add validation
     private String gameName;
     private String gameReview;
-    private char gameRating;
+    private String gameRating;
 
     public String getGameName() {
         return gameName;
@@ -22,11 +23,11 @@ public class GameInputDto {
         this.gameReview = gameReview;
     }
 
-    public char getGameRating() {
+    public String getGameRating() {
         return gameRating;
     }
 
-    public void setGameRating(char gameRating) {
+    public void setGameRating(String gameRating) {
         this.gameRating = gameRating;
     }
 }

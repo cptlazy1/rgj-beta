@@ -2,7 +2,6 @@ package com.example.retrogamejock.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 @Table(name = "games")
@@ -12,7 +11,8 @@ public class Game {
     private Long gameID;
     private String gameName;
     private String gameReview;
-    private char gameRating;
+    private String gameRating;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -20,6 +20,8 @@ public class Game {
 
     @OneToOne
     private GameCondition gameCondition;
+
+
 
     // Getters and setters
     public Long getGameID() {
@@ -46,11 +48,11 @@ public class Game {
         this.gameReview = gameReview;
     }
 
-    public char getGameRating() {
+    public String getGameRating() {
         return gameRating;
     }
 
-    public void setGameRating(char gameRating) {
+    public void setGameRating(String gameRating) {
         this.gameRating = gameRating;
     }
 

@@ -12,8 +12,10 @@ public class GameCondition {
     private boolean hasManual;
     private boolean hasCase;
 
+
     @OneToOne(mappedBy = "gameCondition")
     private Game game;
+
 
     // Getters and setters
     public Long getGameConditionID() {

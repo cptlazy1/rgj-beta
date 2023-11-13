@@ -4,7 +4,7 @@ public class GameDto {
     private Long gameID;
     private String gameName;
     private String gameReview;
-    private char gameRating;
+    private String gameRating;
 
 
 
@@ -32,11 +32,11 @@ public class GameDto {
         this.gameReview = gameReview;
     }
 
-    public char getGameRating() {
+    public String getGameRating() {
         return gameRating;
     }
 
-    public void setGameRating(char gameRating) {
+    public void setGameRating(String gameRating) {
         this.gameRating = gameRating;
     }
 }
