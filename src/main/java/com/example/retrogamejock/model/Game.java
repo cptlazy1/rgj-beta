@@ -17,7 +17,7 @@ public class Game {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "game_condition_id")
     private GameCondition gameCondition;
 
