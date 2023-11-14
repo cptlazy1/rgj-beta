@@ -86,30 +86,45 @@ public class GameSystemService {
     }
 
 
-    // Method to convert GameSystemDto to GameSystem
-    private GameSystem convertToGameSystem(GameSystemInputDto gameSystemInputDto) {
+//    // Method to convert GameSystemInputDto to GameSystem
+//    private GameSystem convertToGameSystem(GameSystemInputDto gameSystemInputDto) {
+//
+//        GameSystem gameSystem = new GameSystem();
+//
+//        gameSystem.setGameSystemName(gameSystemInputDto.getGameSystemName());
+//        gameSystem.setGameSystemReview(gameSystemInputDto.getGameSystemReview());
+//        gameSystem.setGameSystemRating(gameSystemInputDto.getGameSystemRating());
+//
+//        return gameSystem;
+//    }
 
-        GameSystem gameSystem = new GameSystem();
 
-        gameSystem.setGameSystemName(gameSystemInputDto.getGameSystemName());
-        gameSystem.setGameSystemReview(gameSystemInputDto.getGameSystemReview());
-        gameSystem.setGameSystemRating(gameSystemInputDto.getGameSystemRating());
+//    // Method to convert GameSystem to GameSystemDto
+//    private GameSystemDto convertToGameSystemDto(GameSystem gameSystem) {
+//
+//        GameSystemDto gameSystemDto = new GameSystemDto();
+//
+//        gameSystemDto.setGameSystemID(gameSystem.getGameSystemID());
+//        gameSystemDto.setGameSystemName(gameSystem.getGameSystemName());
+//        gameSystemDto.setGameSystemReview(gameSystem.getGameSystemReview());
+//        gameSystemDto.setGameSystemRating(gameSystem.getGameSystemRating());
+//
+//        return gameSystemDto;
+//    }
 
-        return gameSystem;
-    }
-
-
-    // Method to convert GameSystem to GameSystemDto
+    // Method to convert GameSystem to GameSystemDto using ModelMapper
     private GameSystemDto convertToGameSystemDto(GameSystem gameSystem) {
-
-        GameSystemDto gameSystemDto = new GameSystemDto();
-
-        gameSystemDto.setGameSystemID(gameSystem.getGameSystemID());
-        gameSystemDto.setGameSystemName(gameSystem.getGameSystemName());
-        gameSystemDto.setGameSystemReview(gameSystem.getGameSystemReview());
-        gameSystemDto.setGameSystemRating(gameSystem.getGameSystemRating());
-
-        return gameSystemDto;
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(gameSystem, GameSystemDto.class);
     }
+
+    // Method to convert GameSystemInputDto to GameSystem using ModelMapper
+    private GameSystem convertToGameSystem(GameSystemInputDto gameSystemInputDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(gameSystemInputDto, GameSystem.class);
+    }
+
+
+
 
 }
