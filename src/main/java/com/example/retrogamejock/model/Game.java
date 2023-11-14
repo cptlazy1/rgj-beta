@@ -18,6 +18,7 @@ public class Game {
     private User user;
 
     @OneToOne
+    @JoinColumn(name = "game_condition_id")
     private GameCondition gameCondition;
 
     // Getters and setters
