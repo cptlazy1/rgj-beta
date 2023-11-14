@@ -1,6 +1,5 @@
 package com.example.retrogamejock.controller;
 
-import com.example.retrogamejock.dto.GameConditionDto;
 import com.example.retrogamejock.dto.GameInputDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +35,8 @@ public class GameController {
     // PostMapping to add game
     @PostMapping("/games")
     public ResponseEntity<GameDto> addGame(@Valid @RequestBody GameInputDto gameInputDto) {
-        GameDto gameDto1 = gameService.addGame(gameInputDto);
-        return ResponseEntity.created(null).body(gameDto1);
+        GameDto gameDto = gameService.addGame(gameInputDto);
+        return ResponseEntity.created(null).body(gameDto);
     }
 
     // DeleteMapping to delete game

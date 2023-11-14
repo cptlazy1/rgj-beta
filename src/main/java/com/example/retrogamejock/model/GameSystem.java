@@ -15,6 +15,9 @@ public class GameSystem {
     private String gameSystemReview;
     private String gameSystemRating;
 
+    @OneToOne
+    private GameSystemCondition gameSystemCondition;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -58,5 +61,9 @@ public class GameSystem {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setGameSystemCondition(GameSystemCondition gameSystemCondition) {
+        this.gameSystemCondition = gameSystemCondition;
     }
 }

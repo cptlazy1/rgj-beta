@@ -116,32 +116,45 @@ public class UserService {
         }
     }
 
-    // Method to convert UserInputDto to User
+//    // Method to convert UserInputDto to User
+//    public User convertToUser(UserInputDto userInputDto) {
+//
+//        User user = new User();
+//
+//        user.setUserName(userInputDto.getUserName());
+//        user.setPassword(userInputDto.getPassword());
+//        user.setEmail(userInputDto.getEmail());
+//        user.setProfileIsPrivate(userInputDto.isProfileIsPrivate());
+//
+//        return user;
+//    }
+
+    // Method to convert UserInputDto to User using ModelMapper
     public User convertToUser(UserInputDto userInputDto) {
-
-        User user = new User();
-
-        user.setUserName(userInputDto.getUserName());
-        user.setPassword(userInputDto.getPassword());
-        user.setEmail(userInputDto.getEmail());
-        user.setProfileIsPrivate(userInputDto.isProfileIsPrivate());
-
-        return user;
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(userInputDto, User.class);
     }
 
-    // Method to convert User to UserDto
+//    // Method to convert User to UserDto
+//    public UserDto convertToUserDto(User user) {
+//
+//        UserDto userDto = new UserDto();
+//
+//        userDto.setUserID(user.getUserID());
+//        userDto.setUserName(user.getUserName());
+//        userDto.setPassword(user.getPassword());
+//        userDto.setEmail(user.getEmail());
+//        userDto.setProfileIsPrivate(user.isProfileIsPrivate());
+//
+//        return userDto;
+//    }
+
+    // Method to convert User to UserDto using ModelMapper
     public UserDto convertToUserDto(User user) {
-
-        UserDto userDto = new UserDto();
-
-        userDto.setUserID(user.getUserID());
-        userDto.setUserName(user.getUserName());
-        userDto.setPassword(user.getPassword());
-        userDto.setEmail(user.getEmail());
-        userDto.setProfileIsPrivate(user.isProfileIsPrivate());
-
-        return userDto;
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(user, UserDto.class);
     }
+
 
     // Method to assign a game to a user
     // This method works, but it is not ideal.

@@ -52,4 +52,31 @@ public class GameConditionService {
         return gameConditionDto;
     }
 
+    // Method to add gameCondition
+    public GameConditionDto addGameCondition(GameConditionInputDto gameConditionInputDto) {
+        GameCondition gameCondition = convertToGameCondition(gameConditionInputDto);
+        GameCondition savedGameCondition = gameConditionRepository.save(gameCondition);
+        return convertToGameConditionDto(savedGameCondition);
+    }
+
+    // Method to update gameCondition using ModelMapper
+    public GameConditionDto updateGameCondition(Long gameConditionID, GameConditionInputDto gameConditionInputDto ) {
+        Optional<GameCondition> gameConditionOptional = gameConditionRepository.findById(gameConditionID);
+
+        if (gameConditionOptional.isPresent()) {
+            GameCondition gameCondition = gameConditionOptional.get();
+
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.getConfiguration().setSkipNullEnabled(true);
+            modelMapper.map(gameConditionInputDto, gameCondition);
+
+            GameCondition savedGameCondition = gameConditionRepository.save(gameCondition);
+
+            return convertToGameConditionDto(savedGameCondition);
+
+        } else {
+            throw new RecordNotFoundException("No gameCondition record exists for given gameConditionID");
+        }
+    }
+
 }

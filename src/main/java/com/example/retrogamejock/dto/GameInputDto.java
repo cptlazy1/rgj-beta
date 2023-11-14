@@ -7,6 +7,10 @@ public class GameInputDto {
     private String gameReview;
     private String gameRating;
 
+    // Default constructor
+    public GameInputDto() {
+    }
+
     // Constructor
     public GameInputDto(String gameName, String gameReview, String gameRating) {
         this.gameName = gameName;

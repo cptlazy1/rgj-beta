@@ -21,7 +21,7 @@ public class GameService {
     private final GameRepository gameRepository;
     private final GameConditionRepository gameConditionRepository;
 
-    // Constructor to inject GameRepository
+    // Constructor
     public GameService(GameRepository gameRepository, GameConditionRepository gameConditionRepository) {
         this.gameRepository = gameRepository;
         this.gameConditionRepository = gameConditionRepository;
@@ -115,29 +115,46 @@ public class GameService {
         }
     }
 
-    // Add method to convert GameInputDto to Game
+//    // Method to convert GameInputDto to Game
+//    public Game convertToGame(GameInputDto gameInputDto) {
+//
+//        Game game = new Game();
+//
+//        game.setGameName(gameInputDto.getGameName());
+//        game.setGameReview(gameInputDto.getGameReview());
+//        game.setGameRating(gameInputDto.getGameRating());
+//
+//        return game;
+//    }
+
+    // Method to convert GameInputDto to Game using ModelMapper
     public Game convertToGame(GameInputDto gameInputDto) {
 
-        Game game = new Game();
+        ModelMapper modelMapper = new ModelMapper();
 
-        game.setGameName(gameInputDto.getGameName());
-        game.setGameReview(gameInputDto.getGameReview());
-        game.setGameRating(gameInputDto.getGameRating());
-
-        return game;
+        return modelMapper.map(gameInputDto, Game.class);
     }
 
-    // Method to convert Game to GameDto
+
+//    // Method to convert Game to GameDto
+//    public GameDto convertToGameDto(Game game) {
+//
+//        GameDto gameDto = new GameDto();
+//
+//        gameDto.setGameID(game.getGameID());
+//        gameDto.setGameName(game.getGameName());
+//        gameDto.setGameReview(game.getGameReview());
+//        gameDto.setGameRating(game.getGameRating());
+//
+//        return gameDto;
+//    }
+
+    // Method to convert GameInputDto to Game using ModelMapper
     public GameDto convertToGameDto(Game game) {
 
-        GameDto gameDto = new GameDto();
+        ModelMapper modelMapper = new ModelMapper();
 
-        gameDto.setGameID(game.getGameID());
-        gameDto.setGameName(game.getGameName());
-        gameDto.setGameReview(game.getGameReview());
-        gameDto.setGameRating(game.getGameRating());
-
-        return gameDto;
+        return modelMapper.map(game, GameDto.class);
     }
 
 
@@ -154,6 +171,7 @@ public class GameService {
             GameCondition gameCondition = gameConditionOptional.get();
 
             game.setGameCondition(gameCondition);
+
             gameRepository.save(game);
 
         } else {
