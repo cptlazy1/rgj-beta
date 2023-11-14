@@ -7,6 +7,9 @@ import com.example.retrogamejock.service.GameService;
 import com.example.retrogamejock.dto.GameDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -36,7 +39,12 @@ public class GameController {
     @PostMapping("/games")
     public ResponseEntity<GameDto> addGame(@Valid @RequestBody GameInputDto gameInputDto) {
         GameDto gameDto = gameService.addGame(gameInputDto);
-        return ResponseEntity.created(null).body(gameDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/games/{id}")
+                .buildAndExpand(gameDto.getGameID())
+                .toUriString());
+        return ResponseEntity.created(uri).body(gameDto);
     }
 
     // DeleteMapping to delete game
