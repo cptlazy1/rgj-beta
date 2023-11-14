@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.retrogamejock.service.GameSystemConditionService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -34,7 +36,14 @@ public class GameSystemConditionController {
     @PostMapping("/game-system-conditions")
     public ResponseEntity<GameSystemConditionDto> addGameSystemCondition(@Valid @RequestBody GameSystemConditionInputDto gameSystemConditionInputDto) {
         GameSystemConditionDto gameSystemConditionDto = gameSystemConditionService.addGameSystemCondition(gameSystemConditionInputDto);
-        return ResponseEntity.created(null).body(gameSystemConditionDto);
+
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/game-system-conditions/{id}")
+                .buildAndExpand(gameSystemConditionDto.getGameSystemConditionID())
+                .toUriString());
+
+        return ResponseEntity.created(uri).body(gameSystemConditionDto);
     }
 
     // PutMapping to assign gameSystemCondition to gameSystem

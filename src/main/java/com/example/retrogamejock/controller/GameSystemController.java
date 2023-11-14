@@ -6,7 +6,9 @@ import com.example.retrogamejock.service.GameSystemService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -37,7 +39,14 @@ public class GameSystemController {
     @PostMapping("/gamesystems")
     public ResponseEntity<GameSystemDto> addGameSystem(@Valid @RequestBody GameSystemInputDto gameSystemInputDto) {
         GameSystemDto gameSystemDto = gameSystemService.addGameSystem(gameSystemInputDto);
-        return ResponseEntity.created(null).body(gameSystemDto);
+
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/gamesystems/{id}")
+                .buildAndExpand(gameSystemDto.getGameSystemID())
+                .toUriString());
+
+        return ResponseEntity.created(uri).body(gameSystemDto);
     }
 
     // DeleteMapping to delete game system

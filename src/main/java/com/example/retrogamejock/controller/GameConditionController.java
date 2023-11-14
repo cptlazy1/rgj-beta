@@ -6,7 +6,9 @@ import com.example.retrogamejock.service.GameConditionService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,7 +32,14 @@ public class GameConditionController {
     @PostMapping("/game-conditions")
     public ResponseEntity<GameConditionDto> addGameCondition(@Valid @RequestBody GameConditionInputDto gameConditionInputDto) {
         GameConditionDto savedGameConditionDto = gameConditionService.addGameCondition(gameConditionInputDto);
-        return ResponseEntity.created(null).body(savedGameConditionDto);
+
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/game-conditions/{id}")
+                .buildAndExpand(savedGameConditionDto.getGameConditionID())
+                .toUriString());
+
+        return ResponseEntity.created(uri).body(savedGameConditionDto);
     }
 
     // PutMapping to update gameCondition

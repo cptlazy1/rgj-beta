@@ -39,11 +39,13 @@ public class GameController {
     @PostMapping("/games")
     public ResponseEntity<GameDto> addGame(@Valid @RequestBody GameInputDto gameInputDto) {
         GameDto gameDto = gameService.addGame(gameInputDto);
+
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/games/{id}")
                 .buildAndExpand(gameDto.getGameID())
                 .toUriString());
+
         return ResponseEntity.created(uri).body(gameDto);
     }
 

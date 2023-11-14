@@ -6,7 +6,9 @@ import com.example.retrogamejock.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,7 +37,14 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserInputDto userInputDto) {
         UserDto userDto = userService.addUser(userInputDto);
-        return ResponseEntity.created(null).body(userDto);
+
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/users/{id}")
+                .buildAndExpand(userDto.getUserID())
+                .toUriString());
+
+        return ResponseEntity.created(uri).body(userDto);
     }
 
     // DeleteMapping to delete user
