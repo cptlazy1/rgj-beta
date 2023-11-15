@@ -1,5 +1,7 @@
 package com.example.retrogamejock.service;
 
+import com.example.retrogamejock.dto.GameDto;
+import com.example.retrogamejock.dto.GameSystemDto;
 import com.example.retrogamejock.dto.UserDto;
 import com.example.retrogamejock.dto.UserInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
@@ -11,6 +13,7 @@ import com.example.retrogamejock.repository.GameSystemRepository;
 import com.example.retrogamejock.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,6 +26,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final GameSystemRepository gameSystemRepository;
+
+    @Autowired
+    private GameService gameService;
+
+    @Autowired
+    private GameSystemService gameSystemService;
 
     // Constructor to inject UserRepository
     public UserService(UserRepository userRepository, GameRepository gameRepository, GameSystemRepository gameSystemRepository) {
@@ -54,6 +63,43 @@ public class UserService {
 
     }
 
+    // Method to get user's games by userID
+    public List<GameDto> getUserGamesByUserID(Long userID) {
+
+        Optional<User> userOptional = userRepository.findById(userID);
+
+        if (userOptional.isPresent()) {
+            List<GameDto> gameDtos = new ArrayList<>();
+            for (Game game : userOptional.get().getGames()) {
+                GameDto gameDto = gameService.convertToGameDto(game);
+                gameDtos.add(gameDto);
+            }
+
+            return gameDtos;
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userID");
+        }
+    }
+
+    // Method to get user's game systems by userID
+    public List<GameSystemDto> getUserGameSystemsByUserID(Long userID) {
+
+        Optional<User> userOptional = userRepository.findById(userID);
+
+        if (userOptional.isPresent()) {
+            List<GameSystemDto> gameSystemDtos = new ArrayList<>();
+            for (GameSystem gameSystem : userOptional.get().getGameSystems()) {
+                GameSystemDto gameDto = gameSystemService.convertToGameSystemDto(gameSystem);
+                gameSystemDtos.add(gameDto);
+            }
+
+            return gameSystemDtos;
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userID");
+        }
+    }
+
+
     // Method to add user
     public UserDto addUser(UserInputDto userInputDto) {
         User user = convertToUser(userInputDto);
@@ -70,30 +116,6 @@ public class UserService {
             throw new RecordNotFoundException("No user record exists for given userID");
         }
     }
-
-//    // Method to update a user
-//    public UserDto updateUser(Long userID, UserInputDto userInputDto) {
-//
-//        Optional<User> userOptional = userRepository.findById(userID);
-//
-//        if (userOptional.isPresent()) {
-//
-//            User user = userOptional.get();
-//            // Update method works but only if all fields are filled in.
-//            // If a field is empty, it will be updated to null.
-//            user.setUserName(userInputDto.getUserName());
-//            user.setPassword(userInputDto.getPassword());
-//            user.setEmail(userInputDto.getEmail());
-//            user.setProfileIsPrivate(userInputDto.isProfileIsPrivate());
-//
-//            User updatedUser = userRepository.save(user);
-//
-//            return convertToUserDto(updatedUser);
-//
-//        } else {
-//            throw new RecordNotFoundException("No user record exists for given userID");
-//        }
-//    }
 
     // ModelMapper version of updateUser
     public UserDto updateUser(Long userID, UserInputDto userInputDto) {
@@ -116,18 +138,6 @@ public class UserService {
         }
     }
 
-//    // Method to convert UserInputDto to User
-//    public User convertToUser(UserInputDto userInputDto) {
-//
-//        User user = new User();
-//
-//        user.setUserName(userInputDto.getUserName());
-//        user.setPassword(userInputDto.getPassword());
-//        user.setEmail(userInputDto.getEmail());
-//        user.setProfileIsPrivate(userInputDto.isProfileIsPrivate());
-//
-//        return user;
-//    }
 
     // Method to convert UserInputDto to User using ModelMapper
     public User convertToUser(UserInputDto userInputDto) {
@@ -135,19 +145,6 @@ public class UserService {
         return modelMapper.map(userInputDto, User.class);
     }
 
-//    // Method to convert User to UserDto
-//    public UserDto convertToUserDto(User user) {
-//
-//        UserDto userDto = new UserDto();
-//
-//        userDto.setUserID(user.getUserID());
-//        userDto.setUserName(user.getUserName());
-//        userDto.setPassword(user.getPassword());
-//        userDto.setEmail(user.getEmail());
-//        userDto.setProfileIsPrivate(user.isProfileIsPrivate());
-//
-//        return userDto;
-//    }
 
     // Method to convert User to UserDto using ModelMapper
     public UserDto convertToUserDto(User user) {

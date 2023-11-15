@@ -113,13 +113,13 @@ public class GameSystemService {
 //    }
 
     // Method to convert GameSystem to GameSystemDto using ModelMapper
-    private GameSystemDto convertToGameSystemDto(GameSystem gameSystem) {
+    public GameSystemDto convertToGameSystemDto(GameSystem gameSystem) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(gameSystem, GameSystemDto.class);
     }
 
     // Method to convert GameSystemInputDto to GameSystem using ModelMapper
-    private GameSystem convertToGameSystem(GameSystemInputDto gameSystemInputDto) {
+    public GameSystem convertToGameSystem(GameSystemInputDto gameSystemInputDto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(gameSystemInputDto, GameSystem.class);
     }
