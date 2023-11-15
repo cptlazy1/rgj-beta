@@ -26,29 +26,32 @@ public class UserService {
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final GameSystemRepository gameSystemRepository;
+    private final GameService gameService;
+    private final GameSystemService gameSystemService;
 
-    @Autowired
-    private GameService gameService;
-
-    @Autowired
-    private GameSystemService gameSystemService;
-
-    // Constructor to inject UserRepository
-    public UserService(UserRepository userRepository, GameRepository gameRepository, GameSystemRepository gameSystemRepository) {
+    // Constructor
+    public UserService(UserRepository userRepository, GameRepository gameRepository, GameSystemRepository gameSystemRepository, GameService gameService, GameSystemService gameSystemService) {
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
         this.gameSystemRepository = gameSystemRepository;
+        this.gameService = gameService;
+        this.gameSystemService = gameSystemService;
     }
 
     // Method to get all users
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
-        List<UserDto> userDtos = new ArrayList<>();
-        for (User user : users) {
-            UserDto userDto = convertToUserDto(user);
-            userDtos.add(userDto);
+
+        if (users.isEmpty()) {
+            throw new RecordNotFoundException("No users found");
+        } else {
+            List<UserDto> userDtos = new ArrayList<>();
+            for (User user : users) {
+                UserDto userDto = convertToUserDto(user);
+                userDtos.add(userDto);
+            }
+            return userDtos;
         }
-        return userDtos;
     }
 
     // Method to get user by userID
@@ -124,12 +127,11 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            // Use ModelMapper to automatically update non-null fields
+            // ModelMapper to automatically update non-null fields
             ModelMapper modelMapper = new ModelMapper();
             modelMapper.getConfiguration().setSkipNullEnabled(true);
             modelMapper.map(userInputDto, user);
 
-            // Save the updated game
             User savedUser = userRepository.save(user);
 
             return convertToUserDto(savedUser);
@@ -174,7 +176,7 @@ public class UserService {
             userRepository.save(user);
 
         } else {
-            throw new RecordNotFoundException("No user record exists for given userID");
+            throw new RecordNotFoundException("No user or game record exists for given IDs");
         }
     }
 
@@ -197,7 +199,7 @@ public class UserService {
             userRepository.save(user);
 
         } else {
-            throw new RecordNotFoundException("No user record exists for given userID");
+            throw new RecordNotFoundException("No user or game system record exists for given IDs");
         }
     }
 

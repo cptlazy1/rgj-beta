@@ -37,8 +37,6 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-
-
     // GetMapping to get users games by userID
     @GetMapping("/users/{id}/games")
     public ResponseEntity<List<GameDto>> getUsersGamesByUserID(@PathVariable("id") Long userID) {
