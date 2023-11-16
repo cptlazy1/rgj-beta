@@ -1,44 +1,54 @@
 package com.example.retrogamejock.dto;
 
+import jakarta.validation.constraints.*;
+
 public class GameSystemConditionInputDto {
 
-    private boolean hasBox;
-    private boolean hasCables;
-    private boolean isModified;
+    @NotNull(message = "hasBox cannot be null")
+    @Pattern(regexp = "true|false", message = "hasBox must be true or false")
+    private String hasBox;
+
+    @NotNull(message = "hasCables cannot be null")
+    @Pattern(regexp = "true|false", message = "hasCables must be true or false")
+    private String hasCables;
+
+    @NotNull(message = "isModified cannot be null")
+    @Pattern(regexp = "true|false", message = "isModified must be true or false")
+    private String isModified;
 
     // Default constructor
     public GameSystemConditionInputDto() {
     }
 
     // Constructor with all fields
-    public GameSystemConditionInputDto(boolean hasBox, boolean hasCables, boolean isModified) {
+    public GameSystemConditionInputDto(String hasBox, String hasCables, String isModified) {
         this.hasBox = hasBox;
         this.hasCables = hasCables;
         this.isModified = isModified;
     }
 
     // Getters and setters
-    public boolean isHasBox() {
+    public String isHasBox() {
         return hasBox;
     }
 
-    public void setHasBox(boolean hasBox) {
+    public void setHasBox(String hasBox) {
         this.hasBox = hasBox;
     }
 
-    public boolean isHasCables() {
+    public String isHasCables() {
         return hasCables;
     }
 
-    public void setHasCables(boolean hasCables) {
+    public void setHasCables(String hasCables) {
         this.hasCables = hasCables;
     }
 
-    public boolean isModified() {
+    public String isModified() {
         return isModified;
     }
 
-    public void setModified(boolean modified) {
+    public void setModified(String modified) {
         isModified = modified;
     }
 }

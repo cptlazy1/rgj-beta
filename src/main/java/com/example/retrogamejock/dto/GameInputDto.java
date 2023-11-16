@@ -1,17 +1,21 @@
 package com.example.retrogamejock.dto;
 
+import jakarta.validation.constraints.*;
+
 public class GameInputDto {
 
-    // TODO: Add validation
+    @NotNull(message = "Game name cannot be null")
     private String gameName;
+    @NotNull(message = "Game review cannot be null")
     private String gameReview;
+    @NotNull(message = "Game rating cannot be null")
     private String gameRating;
 
     // Default constructor
     public GameInputDto() {
     }
 
-    // Constructor
+    // Constructor with all fields
     public GameInputDto(String gameName, String gameReview, String gameRating) {
         this.gameName = gameName;
         this.gameReview = gameReview;

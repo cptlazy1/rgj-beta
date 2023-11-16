@@ -2,15 +2,26 @@ package com.example.retrogamejock.dto;
 
 // This class is used for PostMapping and PutMapping
 
+import jakarta.validation.constraints.*;
+
 public class GameSystemInputDto {
 
-    // TODO: Add validation
+    @NotNull(message = "Game system name cannot be null")
     private String gameSystemName;
+    @NotNull(message = "Game system review cannot be null")
     private String gameSystemReview;
+    @NotNull(message = "Game system rating cannot be null")
     private String gameSystemRating;
 
     // Default constructor
     public GameSystemInputDto() {
+    }
+
+    // Constructor with all fields
+    public GameSystemInputDto(String gameSystemName, String gameSystemReview, String gameSystemRating) {
+        this.gameSystemName = gameSystemName;
+        this.gameSystemReview = gameSystemReview;
+        this.gameSystemRating = gameSystemRating;
     }
 
     // Getters and setters

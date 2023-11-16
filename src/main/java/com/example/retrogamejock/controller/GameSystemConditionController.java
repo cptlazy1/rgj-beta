@@ -53,7 +53,7 @@ public class GameSystemConditionController {
         return ResponseEntity.ok().body("GameSystemCondition with ID " + gameSystemConditionID + " has been assigned to GameSystem with ID " + gameSystemID);
     }
 
-    // Pumapping to update gameSystemCondition
+    // PutMapping to update gameSystemCondition
     @PutMapping("/game-system-conditions/{gameSystemConditionID}")
     public ResponseEntity<GameSystemConditionDto> updateGameSystemCondition(@PathVariable("gameSystemConditionID") Long gameSystemConditionID, @Valid @RequestBody GameSystemConditionInputDto gameSystemConditionInputDto) {
         GameSystemConditionDto gameSystemConditionDto = gameSystemConditionService.updateGameSystemCondition(gameSystemConditionInputDto, gameSystemConditionID);

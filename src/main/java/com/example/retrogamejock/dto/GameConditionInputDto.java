@@ -1,43 +1,50 @@
 package com.example.retrogamejock.dto;
 
+import jakarta.validation.constraints.*;
+
 public class GameConditionInputDto {
 
-    // TODO: Add validation
-    private boolean isCompleteInBox;
-    private boolean hasManual;
-    private boolean hasCase;
+    @NotNull(message = "Complete in box cannot be null")
+    @Pattern(regexp = "true|false", message = "Complete in box must be true or false")
+    private String isCompleteInBox;
+    @NotNull(message = "Has manual cannot be null")
+    @Pattern(regexp = "true|false", message = "Has manual must be true or false")
+    private String hasManual;
+    @NotNull(message = "Has case cannot be null")
+    @Pattern(regexp = "true|false", message = "Has case must be true or false")
+    private String hasCase;
 
     // Default constructor
     public GameConditionInputDto() {
     }
 
-    // Constructor
-    public GameConditionInputDto(boolean isCompleteInBox, boolean hasManual, boolean hasCase) {
+    // Constructor with all fields
+    public GameConditionInputDto(String isCompleteInBox, String hasManual, String hasCase) {
         this.isCompleteInBox = isCompleteInBox;
         this.hasManual = hasManual;
         this.hasCase = hasCase;
     }
 
     // Getters and setters
-    public boolean isCompleteInBox() {return isCompleteInBox;}
+    public String isCompleteInBox() {return isCompleteInBox;}
 
-    public void setCompleteInBox(boolean completeInBox) {
+    public void setCompleteInBox(String completeInBox) {
         isCompleteInBox = completeInBox;
     }
 
-    public boolean isHasManual() {
+    public String isHasManual() {
         return hasManual;
     }
 
-    public void setHasManual(boolean hasManual) {
+    public void setHasManual(String hasManual) {
         this.hasManual = hasManual;
     }
 
-    public boolean isHasCase() {
+    public String isHasCase() {
         return hasCase;
     }
 
-    public void setHasCase(boolean hasCase) {
+    public void setHasCase(String hasCase) {
         this.hasCase = hasCase;
     }
 }
