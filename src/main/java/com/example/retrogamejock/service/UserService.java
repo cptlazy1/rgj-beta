@@ -105,9 +105,12 @@ public class UserService {
 
     // Method to add user
     public UserDto addUser(UserInputDto userInputDto) {
+
         User user = convertToUser(userInputDto);
         User savedUser = userRepository.save(user);
+
         return convertToUserDto(savedUser);
+
     }
 
     // Method to delete a user

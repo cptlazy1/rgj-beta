@@ -1,19 +1,16 @@
 package com.example.retrogamejock.dto;
 
-
-// This class is used for PostMapping and PutMapping
+import jakarta.validation.constraints.*;
 
 public class UserInputDto {
     // ID is not necessary because it is auto-generated
     // TODO: Add validation
+    @NotNull(message = "Username cannot be null")
     private String userName;
     private String password;
     private String email;
     private boolean profileIsPrivate;
 
-    // Default constructor
-    public UserInputDto() {
-    }
 
     // Constructor
     public UserInputDto(

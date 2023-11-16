@@ -54,7 +54,8 @@ public class UserController {
 
     // PostMapping to add user
     @PostMapping("/users")
-    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserInputDto userInputDto) {
+    public ResponseEntity<Object> addUser(@Valid @RequestBody UserInputDto userInputDto) {
+
         UserDto userDto = userService.addUser(userInputDto);
 
         URI uri = URI.create(ServletUriComponentsBuilder

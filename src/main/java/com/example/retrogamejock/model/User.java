@@ -1,8 +1,8 @@
 package com.example.retrogamejock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -19,10 +19,29 @@ public class User {
     private boolean profileIsPrivate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Game> games;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GameSystem> gameSystems;
+
+    // Default constructor
+    public User() {
+    }
+
+    // Constructor
+    public User(
+            Long userID,
+            String userName,
+            String password,
+            String email,
+            boolean profileIsPrivate) {
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.profileIsPrivate = profileIsPrivate;
+    }
 
 
     // Getters and setters
