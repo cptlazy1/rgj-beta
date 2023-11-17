@@ -65,9 +65,17 @@ public class GameSystemConditionService {
         if (gameSystemConditionOptional.isPresent()) {
             GameSystemCondition gameSystemCondition = gameSystemConditionOptional.get();
 
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setSkipNullEnabled(true);
-            modelMapper.map(gameSystemConditionInputDto, gameSystemCondition);
+            if (gameSystemConditionInputDto.getBox() != null) {
+                gameSystemCondition.setBox(gameSystemConditionInputDto.getBox());
+            }
+
+            if (gameSystemConditionInputDto.getCables() != null) {
+                gameSystemCondition.setCables(gameSystemConditionInputDto.getCables());
+            }
+
+            if (gameSystemConditionInputDto.getModified() != null) {
+                gameSystemCondition.setModified(gameSystemConditionInputDto.getModified());
+            }
 
             GameSystemCondition savedGameSystemCondition = gameSystemConditionRepository.save(gameSystemCondition);
 
@@ -98,6 +106,5 @@ public class GameSystemConditionService {
             throw new RuntimeException("Game system or game system condition not found");
         }
     }
-
 
 }

@@ -63,13 +63,6 @@ public class GameController {
         return ResponseEntity.ok().body(gameDto);
     }
 
-    // PatchMapping to update game
-    @PatchMapping("/games/{id}")
-    public ResponseEntity<GameDto> patchGame(@PathVariable("id") Long gameID, @Valid @RequestBody GameInputDto gameInputDto) {
-        GameDto gameDto = gameService.patchGame(gameID, gameInputDto);
-        return ResponseEntity.ok().body(gameDto);
-    }
-
 
     // PutMapping to assign gameCondition to game
     @PutMapping("/games/{gameID}/game-conditions/{gameConditionID}")
@@ -77,13 +70,6 @@ public class GameController {
         gameService.assignGameConditionToGame(gameID, gameConditionID);
         return ResponseEntity.ok().body("GameCondition with the " + gameConditionID + " ID has been assigned to game with the " + gameID + " ID.");
     }
-
-//    // PutMapping to assign gameCondition to game using @PathVariable and @RequestBody
-//    @PutMapping("/games/{gameID}/game-conditions")
-//    public ResponseEntity<String> assignGameConditionToGame(@PathVariable("gameID") Long gameID, @RequestBody GameConditionDto gameConditionDto) {
-//        gameService.assignGameConditionToGame(gameID, gameConditionDto.getGameConditionID());
-//        return ResponseEntity.ok().body("GameCondition with the " + gameConditionDto.getGameConditionID() + " ID has been assigned to game with the " + gameID + " ID.");
-//    }
 
 
 }

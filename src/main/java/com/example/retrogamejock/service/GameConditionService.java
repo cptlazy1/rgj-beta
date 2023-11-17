@@ -66,9 +66,15 @@ public class GameConditionService {
         if (gameConditionOptional.isPresent()) {
             GameCondition gameCondition = gameConditionOptional.get();
 
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setSkipNullEnabled(true);
-            modelMapper.map(gameConditionInputDto, gameCondition);
+            if (gameConditionInputDto.getCompleteInBox() != null) {
+                gameCondition.setCompleteInBox(gameConditionInputDto.getCompleteInBox());
+            }
+            if (gameConditionInputDto.getHasManual() != null) {
+                gameCondition.setHasManual(gameConditionInputDto.getHasManual());
+            }
+            if (gameConditionInputDto.getHasCase() != null) {
+                gameCondition.setHasCase(gameConditionInputDto.getHasCase());
+            }
 
             GameCondition savedGameCondition = gameConditionRepository.save(gameCondition);
 

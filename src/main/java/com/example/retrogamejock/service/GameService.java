@@ -27,7 +27,7 @@ public class GameService {
         this.gameConditionRepository = gameConditionRepository;
     }
 
-    // Add method to get all games
+    // Method to get all games
     public List<GameDto> getAllGames() {
         List<Game> games = gameRepository.findAll();
         List<GameDto> gameDtos = new ArrayList<>();
@@ -38,7 +38,7 @@ public class GameService {
         return gameDtos;
     }
 
-    // Add method to get game by gameID
+    // Method to get game by gameID
     public GameDto getGameByGameID(Long gameID) {
         Optional<Game> gameOptional = gameRepository.findById(gameID);
         if (gameOptional.isPresent()) {
@@ -50,7 +50,7 @@ public class GameService {
 
     }
 
-    // Add method to add game
+    // Method to add game
     public GameDto addGame(GameInputDto gameInputDto) {
         Game game = convertToGame(gameInputDto);
         Game savedGame = gameRepository.save(game);
@@ -58,7 +58,7 @@ public class GameService {
     }
 
 
-    // Add method to delete game
+    // Method to delete game
     public void deleteGame(@RequestBody Long gameID) {
         Optional<Game> gameOptional = gameRepository.findById(gameID);
         if (gameOptional.isPresent()) {
@@ -68,41 +68,25 @@ public class GameService {
         }
     }
 
-
-    // ModelMapper version of updateGame. It updates all the fields now that I changed the
-    // gameRating field in the Game, GameDto and GameInputDto to a String from char.
-    // char is a primitive type and can't be null. String is an object and can be null.
+    // Method to update game
     public GameDto updateGame(Long gameID, GameInputDto gameInputDto) {
         Optional<Game> gameOptional = gameRepository.findById(gameID);
 
         if (gameOptional.isPresent()) {
             Game game = gameOptional.get();
 
-            // Automatically update non-null fields
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setSkipNullEnabled(true);
-            modelMapper.map(gameInputDto, game);
+            // Manually update non-null fields
+            if (gameInputDto.getGameName() != null) {
+                game.setGameName(gameInputDto.getGameName());
+            }
 
-            // Save the updated game
-            Game savedGame = gameRepository.save(game);
+            if (gameInputDto.getGameReview() != null) {
+                game.setGameReview(gameInputDto.getGameReview());
+            }
 
-            return convertToGameDto(savedGame);
-        } else {
-            throw new RecordNotFoundException("No game record exists for the given gameID");
-        }
-    }
-
-    // Method to patch a game
-    public GameDto patchGame(Long gameID, GameInputDto gameInputDto) {
-        Optional<Game> gameOptional = gameRepository.findById(gameID);
-
-        if (gameOptional.isPresent()) {
-            Game game = gameOptional.get();
-
-            // Automatically update non-null fields
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setSkipNullEnabled(true);
-            modelMapper.map(gameInputDto, game);
+            if (gameInputDto.getGameRating() != null) {
+                game.setGameRating(gameInputDto.getGameRating());
+            }
 
             // Save the updated game
             Game savedGame = gameRepository.save(game);
@@ -122,7 +106,6 @@ public class GameService {
 
         return modelMapper.map(gameInputDto, Game.class);
     }
-
 
 
     // Method to convert GameInputDto to Game using ModelMapper

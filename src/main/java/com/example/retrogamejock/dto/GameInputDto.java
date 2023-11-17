@@ -1,18 +1,17 @@
 package com.example.retrogamejock.dto;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.modelmapper.internal.bytebuddy.asm.Advice;
 
 public class GameInputDto {
 
-
-    @NotNull(message = "Game name cannot be null")
     @Size(max = 50, message = "Game name must be less than 50 characters")
     private String gameName;
 
-    @Size(max = 200, message = "Game review must be less than 200 characters")
+    @Size(min = 2, max = 200, message = "Game review must be between 2-200 characters")
     private String gameReview;
 
+    @Size(min = 1, max = 1, message = "Game rating must be between 1-1 characters")
     private String gameRating;
 
     // Default constructor

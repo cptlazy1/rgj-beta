@@ -6,49 +6,50 @@ public class GameSystemConditionInputDto {
 
 //    @NotNull(message = "hasBox cannot be null")
     @Pattern(regexp = "true|false", message = "hasBox must be true or false")
-    private String hasBox;
+    private String box;
 
-//    @NotNull(message = "hasCables cannot be null")
-    @Pattern(regexp = "true|false", message = "hasCables must be true or false")
-    private String hasCables;
+//    @NotNull(message = "cables cannot be null")
+    @Pattern(regexp = "true|false", message = "cables must be true or false")
+    private String cables;
 
-//    @NotNull(message = "isModified cannot be null")
-    @Pattern(regexp = "true|false", message = "isModified must be true or false")
-    private String isModified;
+//    @NotNull(message = "modified cannot be null")
+    @Pattern(regexp = "true|false", message = "modified must be true or false")
+    private String modified;
 
     // Default constructor
     public GameSystemConditionInputDto() {
     }
 
     // Constructor with all fields
-    public GameSystemConditionInputDto(String hasBox, String hasCables, String isModified) {
-        this.hasBox = hasBox;
-        this.hasCables = hasCables;
-        this.isModified = isModified;
+    public GameSystemConditionInputDto(String box, String cables, String modified) {
+        this.box = box;
+        this.cables = cables;
+        this.modified = modified;
     }
 
     // Getters and setters
-    public String isHasBox() {
-        return hasBox;
+
+    public String getBox() {
+        return box;
     }
 
-    public void setHasBox(String hasBox) {
-        this.hasBox = hasBox;
+    public void setBox(String box) {
+        this.box = box;
     }
 
-    public String isHasCables() {
-        return hasCables;
+    public String getCables() {
+        return cables;
     }
 
-    public void setHasCables(String hasCables) {
-        this.hasCables = hasCables;
+    public void setCables(String cables) {
+        this.cables = cables;
     }
 
-    public String isModified() {
-        return isModified;
+    public String getModified() {
+        return modified;
     }
 
     public void setModified(String modified) {
-        isModified = modified;
+        this.modified = modified;
     }
 }

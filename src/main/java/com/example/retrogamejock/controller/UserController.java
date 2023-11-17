@@ -81,13 +81,6 @@ public class UserController {
         return ResponseEntity.ok().body(userDto);
     }
 
-    // PatchMapping to partially update user
-    @PatchMapping("/users/{id}")
-    public ResponseEntity<UserDto> patchUser(@PathVariable("id") Long userID, @Valid @RequestBody UserInputDto userInputDto) {
-
-        UserDto userDto = userService.patchUser(userID, userInputDto);
-        return ResponseEntity.ok().body(userDto);
-    }
 
     // PutMapping to assign game to user
     @PutMapping("/users/{userID}/games/{gameID}")

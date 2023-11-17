@@ -7,10 +7,13 @@ import jakarta.validation.constraints.*;
 public class GameSystemInputDto {
 
 
+    @Size(min = 2, max = 30, message = "Game System name must be between 2-30 characters")
     private String gameSystemName;
 
+    @Size(min = 2, max = 200, message = "Game System review must be between 2-200 characters")
     private String gameSystemReview;
 
+    @Size(min = 1, max = 1, message = "Game System rating must be between 1-1 characters")
     private String gameSystemRating;
 
     // Default constructor

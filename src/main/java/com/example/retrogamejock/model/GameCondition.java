@@ -9,15 +9,16 @@ public class GameCondition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_condition_id")
     private Long gameConditionID;
-    private boolean isCompleteInBox;
-    private boolean hasManual;
-    private boolean hasCase;
+    private String completeInBox;
+    private String hasManual;
+    private String hasCase;
 
 
     @OneToOne(mappedBy = "gameCondition")
     private Game game;
 
     // Getters and setters
+
     public Long getGameConditionID() {
         return gameConditionID;
     }
@@ -26,34 +27,35 @@ public class GameCondition {
         this.gameConditionID = gameConditionID;
     }
 
-    public boolean isCompleteInBox() {
-        return isCompleteInBox;
+    public String getCompleteInBox() {
+        return completeInBox;
     }
 
-    public void setCompleteInBox(boolean completeInBox) {
-        isCompleteInBox = completeInBox;
+    public void setCompleteInBox(String completeInBox) {
+        this.completeInBox = completeInBox;
     }
 
-    public boolean isHasManual() {
+    public String getHasManual() {
         return hasManual;
     }
 
-    public void setHasManual(boolean hasManual) {
+    public void setHasManual(String hasManual) {
         this.hasManual = hasManual;
     }
 
-    public boolean isHasCase() {
+    public String getHasCase() {
         return hasCase;
     }
 
-    public void setHasCase(boolean hasCase) {
+    public void setHasCase(String hasCase) {
         this.hasCase = hasCase;
     }
 
-    public void setGameCondition(Game game) {
+    public Game getGame() {
+        return game;
     }
 
-
-
-
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }

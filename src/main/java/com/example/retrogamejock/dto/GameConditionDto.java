@@ -3,23 +3,24 @@ package com.example.retrogamejock.dto;
 public class GameConditionDto {
 
     private Long gameConditionID;
-    private boolean isCompleteInBox;
-    private boolean hasManual;
-    private boolean hasCase;
+    private String completeInBox;
+    private String hasManual;
+    private String hasCase;
 
     // Default constructor
     public GameConditionDto() {
     }
 
     // Constructor
-    public GameConditionDto(Long gameConditionID, boolean isCompleteInBox, boolean hasManual, boolean hasCase) {
+    public GameConditionDto(Long gameConditionID, String completeInBox, String hasManual, String hasCase) {
         this.gameConditionID = gameConditionID;
-        this.isCompleteInBox = isCompleteInBox;
+        this.completeInBox = completeInBox;
         this.hasManual = hasManual;
         this.hasCase = hasCase;
     }
 
     // Getters and setters
+
     public Long getGameConditionID() {
         return gameConditionID;
     }
@@ -28,27 +29,27 @@ public class GameConditionDto {
         this.gameConditionID = gameConditionID;
     }
 
-    public boolean isCompleteInBox() {
-        return isCompleteInBox;
+    public String getCompleteInBox() {
+        return completeInBox;
     }
 
-    public void setCompleteInBox(boolean completeInBox) {
-        isCompleteInBox = completeInBox;
+    public void setCompleteInBox(String completeInBox) {
+        this.completeInBox = completeInBox;
     }
 
-    public boolean isHasManual() {
+    public String getHasManual() {
         return hasManual;
     }
 
-    public void setHasManual(boolean hasManual) {
+    public void setHasManual(String hasManual) {
         this.hasManual = hasManual;
     }
 
-    public boolean isHasCase() {
+    public String getHasCase() {
         return hasCase;
     }
 
-    public void setHasCase(boolean hasCase) {
+    public void setHasCase(String hasCase) {
         this.hasCase = hasCase;
     }
 }

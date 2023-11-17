@@ -9,9 +9,9 @@ public class GameSystemCondition {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "game_system_condition_id")
     private Long gameSystemConditionID;
-    private boolean hasBox;
-    private boolean hasCables;
-    private boolean isModified;
+    private String box;
+    private String cables;
+    private String modified;
 
     @OneToOne(mappedBy = "gameSystemCondition")
     private GameSystem gameSystem;
@@ -21,11 +21,11 @@ public class GameSystemCondition {
     }
 
     // Constructor with all fields
-    public GameSystemCondition(Long gameSystemConditionID, boolean hasBox, boolean hasCables, boolean isModified) {
+    public GameSystemCondition(Long gameSystemConditionID, String box, String cables, String modified) {
         this.gameSystemConditionID = gameSystemConditionID;
-        this.hasBox = hasBox;
-        this.hasCables = hasCables;
-        this.isModified = isModified;
+        this.box = box;
+        this.cables = cables;
+        this.modified = modified;
     }
 
     // Getters and setters
@@ -38,28 +38,28 @@ public class GameSystemCondition {
         this.gameSystemConditionID = gameSystemConditionID;
     }
 
-    public boolean isHasBox() {
-        return hasBox;
+    public String getBox() {
+        return box;
     }
 
-    public void setHasBox(boolean hasBox) {
-        this.hasBox = hasBox;
+    public void setBox(String box) {
+        this.box = box;
     }
 
-    public boolean isHasCables() {
-        return hasCables;
+    public String getCables() {
+        return cables;
     }
 
-    public void setHasCables(boolean hasCables) {
-        this.hasCables = hasCables;
+    public void setCables(String cables) {
+        this.cables = cables;
     }
 
-    public boolean isModified() {
-        return isModified;
+    public String getModified() {
+        return modified;
     }
 
-    public void setModified(boolean modified) {
-        isModified = modified;
+    public void setModified(String modified) {
+        this.modified = modified;
     }
 
     public GameSystem getGameSystem() {

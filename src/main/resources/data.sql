@@ -37,21 +37,21 @@ INSERT INTO games (game_name, game_review, game_rating)
 VALUES ('Soul Calibur', 'fun', '1');
 
 -- Game conditions
-INSERT INTO game_conditions (is_complete_in_box, has_manual, has_case)
+INSERT INTO game_conditions (complete_in_box, has_manual, has_case)
 VALUES (true, true, true);
 
-INSERT INTO game_conditions (is_complete_in_box, has_manual, has_case)
+INSERT INTO game_conditions (complete_in_box, has_manual, has_case)
 VALUES (false, true, false);
 
-INSERT INTO game_conditions (is_complete_in_box, has_manual, has_case)
+INSERT INTO game_conditions (complete_in_box, has_manual, has_case)
 VALUES (true, true, false);
 
 -- Game system conditions
-INSERT INTO game_system_conditions (has_box, has_cables, is_modified)
+INSERT INTO game_system_conditions (box, cables, modified)
 VALUES (true, true, true);
 
-INSERT INTO game_system_conditions (has_box, has_cables, is_modified)
+INSERT INTO game_system_conditions (box, cables, modified)
 VALUES (true, false, true);
 
-INSERT INTO game_system_conditions (has_box, has_cables, is_modified)
+INSERT INTO game_system_conditions (box, cables, modified)
 VALUES (true, true, false);
