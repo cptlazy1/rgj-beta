@@ -4,13 +4,13 @@ import jakarta.validation.constraints.*;
 
 public class GameConditionInputDto {
 
-    @NotNull(message = "Complete in box cannot be null")
+//    @NotNull(message = "Complete in box cannot be null")
     @Pattern(regexp = "true|false", message = "Complete in box must be true or false")
     private String isCompleteInBox;
-    @NotNull(message = "Has manual cannot be null")
+//    @NotNull(message = "Has manual cannot be null")
     @Pattern(regexp = "true|false", message = "Has manual must be true or false")
     private String hasManual;
-    @NotNull(message = "Has case cannot be null")
+//    @NotNull(message = "Has case cannot be null")
     @Pattern(regexp = "true|false", message = "Has case must be true or false")
     private String hasCase;
 

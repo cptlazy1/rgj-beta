@@ -5,7 +5,7 @@ public class UserDto {
     private String userName;
     private String password;
     private String email;
-    private boolean profileIsPrivate;
+    private String profilePrivate;
 
     // Default constructor
     public UserDto() {
@@ -17,15 +17,18 @@ public class UserDto {
             String userName,
             String password,
             String email,
-            boolean profileIsPrivate) {
+            String profilePrivate) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.profileIsPrivate = profileIsPrivate;
+        this.profilePrivate = profilePrivate;
     }
 
-    public Long getUserID() {return userID;}
+    // Getters and setters
+    public Long getUserID() {
+        return userID;
+    }
 
     public void setUserID(Long userID) {
         this.userID = userID;
@@ -55,11 +58,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public boolean isProfileIsPrivate() {
-        return profileIsPrivate;
+    public String getProfilePrivate() {
+        return profilePrivate;
     }
 
-    public void setProfileIsPrivate(boolean profileIsPrivate) {
-        this.profileIsPrivate = profileIsPrivate;
+    public void setProfilePrivate(String profilePrivate) {
+        this.profilePrivate = profilePrivate;
     }
 }

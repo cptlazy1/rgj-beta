@@ -92,6 +92,28 @@ public class GameService {
         }
     }
 
+    // Method to patch a game
+    public GameDto patchGame(Long gameID, GameInputDto gameInputDto) {
+        Optional<Game> gameOptional = gameRepository.findById(gameID);
+
+        if (gameOptional.isPresent()) {
+            Game game = gameOptional.get();
+
+            // Automatically update non-null fields
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.getConfiguration().setSkipNullEnabled(true);
+            modelMapper.map(gameInputDto, game);
+
+            // Save the updated game
+            Game savedGame = gameRepository.save(game);
+
+            return convertToGameDto(savedGame);
+        } else {
+            throw new RecordNotFoundException("No game record exists for the given gameID");
+        }
+    }
+
+
 
     // Method to convert GameInputDto to Game using ModelMapper
     public Game convertToGame(GameInputDto gameInputDto) {

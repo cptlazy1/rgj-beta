@@ -63,6 +63,13 @@ public class GameController {
         return ResponseEntity.ok().body(gameDto);
     }
 
+    // PatchMapping to update game
+    @PatchMapping("/games/{id}")
+    public ResponseEntity<GameDto> patchGame(@PathVariable("id") Long gameID, @Valid @RequestBody GameInputDto gameInputDto) {
+        GameDto gameDto = gameService.patchGame(gameID, gameInputDto);
+        return ResponseEntity.ok().body(gameDto);
+    }
+
 
     // PutMapping to assign gameCondition to game
     @PutMapping("/games/{gameID}/game-conditions/{gameConditionID}")

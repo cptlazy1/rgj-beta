@@ -4,16 +4,15 @@ import com.example.retrogamejock.dto.GameDto;
 import com.example.retrogamejock.dto.GameSystemDto;
 import com.example.retrogamejock.dto.UserDto;
 import com.example.retrogamejock.dto.UserInputDto;
-import com.example.retrogamejock.model.Game;
 import com.example.retrogamejock.service.UserService;
-import jakarta.validation.Valid;
+import jakarta.validation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
 import java.util.List;
+
 
 @RestController
 public class UserController {
@@ -77,7 +76,16 @@ public class UserController {
     // PutMapping to update user
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userID, @Valid @RequestBody UserInputDto userInputDto) {
+
         UserDto userDto = userService.updateUser(userID, userInputDto);
+        return ResponseEntity.ok().body(userDto);
+    }
+
+    // PatchMapping to partially update user
+    @PatchMapping("/users/{id}")
+    public ResponseEntity<UserDto> patchUser(@PathVariable("id") Long userID, @Valid @RequestBody UserInputDto userInputDto) {
+
+        UserDto userDto = userService.patchUser(userID, userInputDto);
         return ResponseEntity.ok().body(userDto);
     }
 
@@ -92,8 +100,6 @@ public class UserController {
                 .buildAndExpand(userID, gameID)
                 .toUriString());
 
-
-//        return ResponseEntity.created(uri).body("Game with the " + gameID + " ID has been assigned to user with the " + userID + " ID.");
         return ResponseEntity.noContent().location(uri).build();
     }
 

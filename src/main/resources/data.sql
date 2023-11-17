@@ -7,13 +7,13 @@
 -- PostMapping doesn't work if the IDs are entered here because the ID's are not auto.
 
 -- Users
-INSERT INTO users (user_name, password, email, profile_is_private)
+INSERT INTO users (user_name, password, email, profile_private)
 VALUES ('cptlazy', 'password', 'cpt@lazy.com', true);
 
-INSERT INTO users (user_name, password, email, profile_is_private)
+INSERT INTO users (user_name, password, email, profile_private)
 VALUES ('powerpuff', 'password', 'pp@lazy.com', true);
 
-INSERT INTO users (user_name, password, email, profile_is_private)
+INSERT INTO users (user_name, password, email, profile_private)
 VALUES ('haze', 'password', 'haze@lazy.com', true);
 
 --  Game systems

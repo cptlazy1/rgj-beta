@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
@@ -30,7 +31,12 @@ public class UserService {
     private final GameSystemService gameSystemService;
 
     // Constructor
-    public UserService(UserRepository userRepository, GameRepository gameRepository, GameSystemRepository gameSystemRepository, GameService gameService, GameSystemService gameSystemService) {
+    public UserService(
+            UserRepository userRepository,
+            GameRepository gameRepository,
+            GameSystemRepository gameSystemRepository,
+            GameService gameService,
+            GameSystemService gameSystemService) {
         this.userRepository = userRepository;
         this.gameRepository = gameRepository;
         this.gameSystemRepository = gameSystemRepository;
@@ -123,26 +129,61 @@ public class UserService {
         }
     }
 
-    // ModelMapper version of updateUser
+    // Method to update a user
     public UserDto updateUser(Long userID, UserInputDto userInputDto) {
+
         Optional<User> userOptional = userRepository.findById(userID);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            // ModelMapper to automatically update non-null fields
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.getConfiguration().setSkipNullEnabled(true);
-            modelMapper.map(userInputDto, user);
+            if (userInputDto.getUserName() != null) {
+                user.setUserName(userInputDto.getUserName());
+            }
+            if (userInputDto.getPassword() != null) {
+                user.setPassword(userInputDto.getPassword());
+            }
+            if (userInputDto.getEmail() != null) {
+                user.setEmail(userInputDto.getEmail());
+            }
+            if (userInputDto.getProfilePrivate() != null) {
+                user.setProfilePrivate(userInputDto.getProfilePrivate());
+            }
 
             User savedUser = userRepository.save(user);
 
             return convertToUserDto(savedUser);
         } else {
-            throw new RecordNotFoundException("No game record exists for the given gameID");
+            throw new RecordNotFoundException("No user record exists for the given userID");
         }
     }
 
+    // Method to patch a user
+    public UserDto patchUser(Long userID, UserInputDto userInputDto) {
+        Optional<User> userOptional = userRepository.findById(userID);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            if (userInputDto.getUserName() != null) {
+                user.setUserName(userInputDto.getUserName());
+            }
+            if (userInputDto.getPassword() != null) {
+                user.setPassword(userInputDto.getPassword());
+            }
+            if (userInputDto.getEmail() != null) {
+                user.setEmail(userInputDto.getEmail());
+            }
+            if (userInputDto.getProfilePrivate() != null) {
+                user.setProfilePrivate(userInputDto.getProfilePrivate());
+            }
+
+            User savedUser = userRepository.save(user);
+            return convertToUserDto(savedUser);
+        } else {
+            throw new RecordNotFoundException("No user record exists for the given userID");
+        }
+    }
 
     // Method to convert UserInputDto to User using ModelMapper
     public User convertToUser(UserInputDto userInputDto) {

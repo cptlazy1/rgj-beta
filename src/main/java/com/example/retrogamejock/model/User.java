@@ -16,7 +16,7 @@ public class User {
     private String userName;
     private String password;
     private String email;
-    private boolean profileIsPrivate;
+    private String profilePrivate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -29,20 +29,19 @@ public class User {
     public User() {
     }
 
-    // Constructor
+    // Constructor with all fields
     public User(
             Long userID,
             String userName,
             String password,
             String email,
-            boolean profileIsPrivate) {
+            String profilePrivate) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.profileIsPrivate = profileIsPrivate;
+        this.profilePrivate = profilePrivate;
     }
-
 
     // Getters and setters
     public Long getUserID() {
@@ -77,14 +76,13 @@ public class User {
         this.email = email;
     }
 
-    public boolean isProfileIsPrivate() {
-        return profileIsPrivate;
+    public String getProfilePrivate() {
+        return profilePrivate;
     }
 
-    public void setProfileIsPrivate(boolean profileIsPrivate) {
-        this.profileIsPrivate = profileIsPrivate;
+    public void setProfilePrivate(String profilePrivate) {
+        this.profilePrivate = profilePrivate;
     }
-
 
     public List<Game> getGames() {
         return games;

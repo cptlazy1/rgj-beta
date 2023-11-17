@@ -6,11 +6,11 @@ import jakarta.validation.constraints.*;
 
 public class GameSystemInputDto {
 
-    @NotNull(message = "Game system name cannot be null")
+
     private String gameSystemName;
-    @NotNull(message = "Game system review cannot be null")
+
     private String gameSystemReview;
-    @NotNull(message = "Game system rating cannot be null")
+
     private String gameSystemRating;
 
     // Default constructor

@@ -4,15 +4,15 @@ import jakarta.validation.constraints.*;
 
 public class GameSystemConditionInputDto {
 
-    @NotNull(message = "hasBox cannot be null")
+//    @NotNull(message = "hasBox cannot be null")
     @Pattern(regexp = "true|false", message = "hasBox must be true or false")
     private String hasBox;
 
-    @NotNull(message = "hasCables cannot be null")
+//    @NotNull(message = "hasCables cannot be null")
     @Pattern(regexp = "true|false", message = "hasCables must be true or false")
     private String hasCables;
 
-    @NotNull(message = "isModified cannot be null")
+//    @NotNull(message = "isModified cannot be null")
     @Pattern(regexp = "true|false", message = "isModified must be true or false")
     private String isModified;
 

@@ -1,14 +1,18 @@
 package com.example.retrogamejock.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class GameInputDto {
 
+
     @NotNull(message = "Game name cannot be null")
+    @Size(max = 50, message = "Game name must be less than 50 characters")
     private String gameName;
-    @NotNull(message = "Game review cannot be null")
+
+    @Size(max = 200, message = "Game review must be less than 200 characters")
     private String gameReview;
-    @NotNull(message = "Game rating cannot be null")
+
     private String gameRating;
 
     // Default constructor

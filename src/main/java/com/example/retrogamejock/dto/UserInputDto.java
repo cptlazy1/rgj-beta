@@ -3,36 +3,35 @@ package com.example.retrogamejock.dto;
 import jakarta.validation.constraints.*;
 
 public class UserInputDto {
-    // ID is not necessary because it is auto-generated
-    @NotNull(message = "Username cannot be null")
-    @Size(min = 2, max = 20, message = "Username must be between 2-20 characters")
 
+    // ID is not necessary because it is auto-generated
+
+    @Size(min = 2, max = 20, message = "Username must be between 2-20 characters")
     private String userName;
-    @NotNull
+
+    @Size(min = 8, max = 20, message = "Password must be between 8-20 characters")
     private String password;
+
     @Email(message = "Email should be valid")
     private String email;
-    @NotNull(message = "Profile is private cannot be null")
+
     @Pattern(regexp = "true|false", message = "Profile is private must be true or false")
-    private String profileIsPrivate;
+    private String profilePrivate;
 
     // Default constructor
     public UserInputDto() {
     }
 
     // Constructor with all fields
-    public UserInputDto(
-            String userName,
-            String password,
-            String email,
-            String profileIsPrivate) {
+    public UserInputDto(String userName, String password, String email, String profilePrivate) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.profileIsPrivate = profileIsPrivate;
+        this.profilePrivate = profilePrivate;
     }
 
     // Getters and setters
+
     public String getUserName() {
         return userName;
     }
@@ -57,11 +56,11 @@ public class UserInputDto {
         this.email = email;
     }
 
-    public String isProfileIsPrivate() {
-        return profileIsPrivate;
+    public String getProfilePrivate() {
+        return profilePrivate;
     }
 
-    public void setProfileIsPrivate(String profileIsPrivate) {
-        this.profileIsPrivate = profileIsPrivate;
+    public void setProfilePrivate(String profilePrivate) {
+        this.profilePrivate = profilePrivate;
     }
 }
