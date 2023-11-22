@@ -58,17 +58,6 @@ public class UserService {
         }
     }
 
-    // Method to get user by userID
-//    public UserDto getUserByUserID(Long userID) {
-//        Optional<User> userOptional = userRepository.findById(use);
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            return convertToUserDto(user);
-//        } else {
-//            throw new RecordNotFoundException("No user record exists for given userID");
-//        }
-//
-//    }
 
     // Method to get user by userName
     public UserDto getUserByUserName(String userName) {
@@ -82,23 +71,6 @@ public class UserService {
 
     }
 
-    // Method to get user's games by userID
-//    public List<GameDto> getUserGamesByUserID(Long userID) {
-//
-//        Optional<User> userOptional = userRepository.findById(userID);
-//
-//        if (userOptional.isPresent()) {
-//            List<GameDto> gameDtos = new ArrayList<>();
-//            for (Game game : userOptional.get().getGames()) {
-//                GameDto gameDto = gameService.convertToGameDto(game);
-//                gameDtos.add(gameDto);
-//            }
-//
-//            return gameDtos;
-//        } else {
-//            throw new RecordNotFoundException("No user record exists for given userID");
-//        }
-//    }
 
     // Method to get user's games by userName
     public List<GameDto> getUserGamesByUserName(String userName) {
@@ -118,23 +90,6 @@ public class UserService {
         }
     }
 
-    // Method to get user's game systems by userID
-//    public List<GameSystemDto> getUserGameSystemsByUserID(Long userID) {
-//
-//        Optional<User> userOptional = userRepository.findById(userID);
-//
-//        if (userOptional.isPresent()) {
-//            List<GameSystemDto> gameSystemDtos = new ArrayList<>();
-//            for (GameSystem gameSystem : userOptional.get().getGameSystems()) {
-//                GameSystemDto gameDto = gameSystemService.convertToGameSystemDto(gameSystem);
-//                gameSystemDtos.add(gameDto);
-//            }
-//
-//            return gameSystemDtos;
-//        } else {
-//            throw new RecordNotFoundException("No user record exists for given userID");
-//        }
-//    }
 
     // Method to get user's game systems by userName
     public List<GameSystemDto> getUserGameSystemsByUserName(String userName) {
@@ -165,15 +120,6 @@ public class UserService {
 
     }
 
-    // Method to delete a user with userID
-//    public void deleteUser(@RequestBody Long userID) {
-//        Optional<User> userOptional = userRepository.findById(userID);
-//        if (userOptional.isPresent()) {
-//            userRepository.deleteById(userID);
-//        } else {
-//            throw new RecordNotFoundException("No user record exists for given userID");
-//        }
-//    }
 
     // Method to delete a user with userName
     public void deleteUser(@RequestBody String userName) {
