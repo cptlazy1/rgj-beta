@@ -1,20 +1,22 @@
 package com.example.retrogamejock.model;
 
 import jakarta.persistence.*;
-
-import java.util.Set;
+import java.io.Serializable;
 
 @Entity
+@IdClass(RoleKey.class)
 @Table(name = "roles")
-public class Role {
+public class Role implements Serializable {
 
     @Id
-    @Column(name = "role_id")
-    private Long roleID;
-    private String roleName;
+    @Column(nullable = false)
+    private String userName;
+//    private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+
+    @Id
+    @Column(nullable = false)
+    private String role;
 
     // Default constructor
     public Role() {
@@ -23,35 +25,27 @@ public class Role {
 
     // Constructor with all fields
     public Role(
-            Long roleID,
-            String roleName) {
-        this.roleID = roleID;
-        this.roleName = roleName;
+            String userName,
+            String role) {
+        this.userName = userName;
+        this.role = role;
     }
 
     // Getters and setters
 
-    public Long getRoleID() {
-        return roleID;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setRoleID(Long roleID) {
-        this.roleID = roleID;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

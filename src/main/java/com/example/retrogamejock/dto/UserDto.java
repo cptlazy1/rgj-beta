@@ -3,9 +3,9 @@ package com.example.retrogamejock.dto;
 public class UserDto {
     private Long userID;
     private String userName;
-    private String password;
+    private String password; // password shouldn't be in the output dto
     private String email;
-    private String profilePrivate;
+    private String profilePrivate; // This is also not necessary in the output dto
 
     // Default constructor
     public UserDto() {

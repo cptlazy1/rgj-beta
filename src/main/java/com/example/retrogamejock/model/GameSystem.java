@@ -19,7 +19,7 @@ public class GameSystem {
     private GameSystemCondition gameSystemCondition;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_name")
     private User user;
 
     // Getters and setters

@@ -1,8 +1,6 @@
 package com.example.retrogamejock.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,51 +9,42 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
+
+//    @GeneratedValue
+//    @Column(name = "user_id")
+//    Long userID;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    Long userID;
+    @Column(nullable = false, unique = true)
     private String userName;
     private String password;
     private String email;
-    private String profilePrivate;
+    private String profilePrivate = "true";
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(
+            targetEntity = Role.class,
+            cascade = CascadeType.ALL,
+            mappedBy = "userName",
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Game> games;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GameSystem> gameSystems;
 
-    // Default constructor
-    public User() {
-    }
 
-    // Constructor with all fields
-    public User(
-            Long userID,
-            String userName,
-            String password,
-            String email,
-            String profilePrivate) {
-        this.userID = userID;
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.profilePrivate = profilePrivate;
-    }
 
     // Getters and setters
-    public Long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Long userID) {
-        this.userID = userID;
-    }
+//    public Long getUserID() {
+//        return userID;
+//    }
+//
+//    public void setUserID(Long userID) {
+//        this.userID = userID;
+//    }
 
     public String getUserName() {
         return userName;
@@ -89,6 +78,14 @@ public class User {
         this.profilePrivate = profilePrivate;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public List<Game> getGames() {
         return games;
     }
@@ -103,5 +100,15 @@ public class User {
 
     public void setGameSystems(List<GameSystem> gameSystems) {
         this.gameSystems = gameSystems;
+    }
+
+    // Method to add a role
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    // Method to remove a role
+    public void removeRole(Role role) {
+        this.roles.remove(role);
     }
 }

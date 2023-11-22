@@ -28,6 +28,7 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+    // TODO: login needs to be implemented instead hardcoding users and admin
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -60,7 +61,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,
                                 "/game-systems/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST,
-                                "/users").hasRole("USER")
+                                "/users").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/games/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST,

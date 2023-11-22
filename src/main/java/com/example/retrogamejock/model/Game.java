@@ -14,7 +14,7 @@ public class Game {
     private String gameRating;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_name")
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
