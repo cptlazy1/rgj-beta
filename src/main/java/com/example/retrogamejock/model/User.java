@@ -23,9 +23,9 @@ public class User {
 
     @OneToMany(
             targetEntity = Role.class,
-            cascade = CascadeType.ALL,
-            mappedBy = "userName",
-            orphanRemoval = true,
+            cascade = CascadeType.ALL,  // All means *ALL* operations are cascaded. Saving, updating, deleting, etc.
+            mappedBy = "userName",      // This is why we don't need a repository for Role.
+            orphanRemoval = true,       // If there is a role that is not associated with a user, it will be removed.
             fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
@@ -38,14 +38,6 @@ public class User {
 
 
     // Getters and setters
-//    public Long getUserID() {
-//        return userID;
-//    }
-//
-//    public void setUserID(Long userID) {
-//        this.userID = userID;
-//    }
-
     public String getUserName() {
         return userName;
     }

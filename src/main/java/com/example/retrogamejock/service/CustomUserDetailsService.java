@@ -1,6 +1,7 @@
 package com.example.retrogamejock.service;
 
 import com.example.retrogamejock.dto.UserDto;
+import com.example.retrogamejock.dto.UserInputDto;
 import com.example.retrogamejock.model.Role;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -10,8 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-
-import com.example.retrogamejock.dto.UserInputDto;
 
 
 import java.util.ArrayList;
@@ -31,28 +30,24 @@ public class CustomUserDetailsService implements UserDetailsService {
 //    @Override
 //    public UserDetails loadUserByUsername(String username) {
 //        UserDto userDto = userService.getUserByUserName(username);
-//
-//
-//        String password = userInputDto.getPassword();
-//
-//        Set<Role> roles = userInputDto.getRoles();
+//        String password = userDto.getPassword();
+//        Set<Role> roles = userDto.getRoles();
 //        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-//        for (Role role: roles) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
+//        for (Role role : roles) {
+//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
 //        }
-//
-//        return new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities);
+//        return new User(username, password, grantedAuthorities);
 //    }
-
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserDto userDto = userService.getUserByUserName(username);
-        String password = userDto.getPassword();
-        Set<Role> roles = userDto.getRoles();
+        UserInputDto userInputDto = userService.getUserByUserName(username);
+        String password = userInputDto.getPassword();
+        Set<Role> roles = userInputDto.getRoles();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Role role : roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
         return new User(username, password, grantedAuthorities);
     }
+
 }

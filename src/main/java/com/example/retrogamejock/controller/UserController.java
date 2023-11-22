@@ -32,19 +32,19 @@ public class UserController {
 
     // GetMapping to get user by username
     @GetMapping("/users/{username}")
-    public ResponseEntity<UserDto> getUserByUsername(@PathVariable("username") String username) {
-        UserDto userDto = userService.getUserByUserName(username);
-        return ResponseEntity.ok(userDto);
+    public ResponseEntity<String> getUserByUsername(@PathVariable("username") String username) {
+        UserInputDto userInputDto = userService.getUserByUserName(username);
+        return ResponseEntity.ok("User with the " + username + " username has been found.");
     }
 
-    // GetMapping to get users games by userID
+    // GetMapping to get users games by username
     @GetMapping("/users/{username}/games")
     public ResponseEntity<List<GameDto>> getUsersGamesByUserID(@PathVariable("username") String username) {
         List<GameDto> gameDTOs = userService.getUserGamesByUserName(username);
         return new ResponseEntity<>(gameDTOs, HttpStatus.OK);
     }
 
-    // GetMapping to get users game systems by userID
+    // GetMapping to get users game systems by username
     @GetMapping("/users/{username}/game-systems")
     public ResponseEntity<List<GameSystemDto>> getUsersGameSystemsByUserID(@PathVariable("username") String username) {
         List<GameSystemDto> gameSytemDtos = userService.getUserGameSystemsByUserName(username);

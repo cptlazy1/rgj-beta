@@ -60,11 +60,12 @@ public class UserService {
 
 
     // Method to get user by userName
-    public UserDto getUserByUserName(String userName) {
+    public UserInputDto getUserByUserName(String userName) {
         Optional<User> userOptional = userRepository.findByUserName(userName);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return convertToUserDto(user);
+//            return convertToUserDto(user);
+            return convertToUserInputDto(user);
         } else {
             throw new RecordNotFoundException("No user record exists for given userName");
         }
@@ -172,6 +173,13 @@ public class UserService {
     public UserDto convertToUserDto(User user) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, UserDto.class);
+    }
+
+
+    // Method to convert UserInputDto to UserDto using ModelMapper
+    public UserInputDto convertToUserInputDto(User user) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(user, UserInputDto.class);
     }
 
 

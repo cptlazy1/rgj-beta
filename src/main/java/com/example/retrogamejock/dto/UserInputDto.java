@@ -1,6 +1,9 @@
 package com.example.retrogamejock.dto;
 
+import com.example.retrogamejock.model.Role;
 import jakarta.validation.constraints.*;
+
+import java.util.Set;
 
 public class UserInputDto {
 
@@ -17,6 +20,8 @@ public class UserInputDto {
 
     @Pattern(regexp = "true|false", message = "Profile is private must be true or false")
     private String profilePrivate;
+
+    private Set<Role> roles;
 
     // Default constructor
     public UserInputDto() {
@@ -62,5 +67,13 @@ public class UserInputDto {
 
     public void setProfilePrivate(String profilePrivate) {
         this.profilePrivate = profilePrivate;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
