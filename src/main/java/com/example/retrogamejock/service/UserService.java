@@ -59,21 +59,51 @@ public class UserService {
     }
 
     // Method to get user by userID
-    public UserDto getUserByUserID(Long userID) {
-        Optional<User> userOptional = userRepository.findById(userID);
+//    public UserDto getUserByUserID(Long userID) {
+//        Optional<User> userOptional = userRepository.findById(use);
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            return convertToUserDto(user);
+//        } else {
+//            throw new RecordNotFoundException("No user record exists for given userID");
+//        }
+//
+//    }
+
+    // Method to get user by userName
+    public UserDto getUserByUserName(String userName) {
+        Optional<User> userOptional = userRepository.findByUserName(userName);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return convertToUserDto(user);
         } else {
-            throw new RecordNotFoundException("No user record exists for given userID");
+            throw new RecordNotFoundException("No user record exists for given userName");
         }
 
     }
 
     // Method to get user's games by userID
-    public List<GameDto> getUserGamesByUserID(Long userID) {
+//    public List<GameDto> getUserGamesByUserID(Long userID) {
+//
+//        Optional<User> userOptional = userRepository.findById(userID);
+//
+//        if (userOptional.isPresent()) {
+//            List<GameDto> gameDtos = new ArrayList<>();
+//            for (Game game : userOptional.get().getGames()) {
+//                GameDto gameDto = gameService.convertToGameDto(game);
+//                gameDtos.add(gameDto);
+//            }
+//
+//            return gameDtos;
+//        } else {
+//            throw new RecordNotFoundException("No user record exists for given userID");
+//        }
+//    }
 
-        Optional<User> userOptional = userRepository.findById(userID);
+    // Method to get user's games by userName
+    public List<GameDto> getUserGamesByUserName(String userName) {
+
+        Optional<User> userOptional = userRepository.findByUserName(userName);
 
         if (userOptional.isPresent()) {
             List<GameDto> gameDtos = new ArrayList<>();
@@ -84,14 +114,32 @@ public class UserService {
 
             return gameDtos;
         } else {
-            throw new RecordNotFoundException("No user record exists for given userID");
+            throw new RecordNotFoundException("No user record exists for given userName");
         }
     }
 
     // Method to get user's game systems by userID
-    public List<GameSystemDto> getUserGameSystemsByUserID(Long userID) {
+//    public List<GameSystemDto> getUserGameSystemsByUserID(Long userID) {
+//
+//        Optional<User> userOptional = userRepository.findById(userID);
+//
+//        if (userOptional.isPresent()) {
+//            List<GameSystemDto> gameSystemDtos = new ArrayList<>();
+//            for (GameSystem gameSystem : userOptional.get().getGameSystems()) {
+//                GameSystemDto gameDto = gameSystemService.convertToGameSystemDto(gameSystem);
+//                gameSystemDtos.add(gameDto);
+//            }
+//
+//            return gameSystemDtos;
+//        } else {
+//            throw new RecordNotFoundException("No user record exists for given userID");
+//        }
+//    }
 
-        Optional<User> userOptional = userRepository.findById(userID);
+    // Method to get user's game systems by userName
+    public List<GameSystemDto> getUserGameSystemsByUserName(String userName) {
+
+        Optional<User> userOptional = userRepository.findByUserName(userName);
 
         if (userOptional.isPresent()) {
             List<GameSystemDto> gameSystemDtos = new ArrayList<>();
@@ -102,7 +150,7 @@ public class UserService {
 
             return gameSystemDtos;
         } else {
-            throw new RecordNotFoundException("No user record exists for given userID");
+            throw new RecordNotFoundException("No user record exists for given userName");
         }
     }
 
@@ -117,20 +165,30 @@ public class UserService {
 
     }
 
-    // Method to delete a user
-    public void deleteUser(@RequestBody Long userID) {
-        Optional<User> userOptional = userRepository.findById(userID);
+    // Method to delete a user with userID
+//    public void deleteUser(@RequestBody Long userID) {
+//        Optional<User> userOptional = userRepository.findById(userID);
+//        if (userOptional.isPresent()) {
+//            userRepository.deleteById(userID);
+//        } else {
+//            throw new RecordNotFoundException("No user record exists for given userID");
+//        }
+//    }
+
+    // Method to delete a user with userName
+    public void deleteUser(@RequestBody String userName) {
+        Optional<User> userOptional = userRepository.findByUserName(userName);
         if (userOptional.isPresent()) {
-            userRepository.deleteById(userID);
+            userRepository.deleteByUserName(userName);
         } else {
-            throw new RecordNotFoundException("No user record exists for given userID");
+            throw new RecordNotFoundException("No user record exists for given userName");
         }
     }
 
     // Method to update a user
-    public UserDto updateUser(Long userID, UserInputDto userInputDto) {
+    public UserDto updateUser(String username, UserInputDto userInputDto) {
 
-        Optional<User> userOptional = userRepository.findById(userID);
+        Optional<User> userOptional = userRepository.findByUserName(username);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -176,9 +234,9 @@ public class UserService {
     // It is not ideal because it is overwriting the existing game.
     // TODO: Fix this method so it doesn't overwrite the existing game or user
     @Transactional
-    public void assignGameToUser(Long userID, Long gameID) {
+    public void assignGameToUser(String username, Long gameID) {
 
-        Optional<User> userOptional = userRepository.findById(userID);
+        Optional<User> userOptional = userRepository.findByUserName(username);
         Optional<Game> gameOptional = gameRepository.findById(gameID);
 
         if (userOptional.isPresent() && gameOptional.isPresent()) {
@@ -199,9 +257,9 @@ public class UserService {
     // Method to assign a game system to a user
     // TODO: Fix this method so it doesn't overwrite the existing game system or user
     @Transactional
-    public void assignGameSystemToUser(Long userID, Long gameSystemID) {
+    public void assignGameSystemToUser(String username, Long gameSystemID) {
 
-        Optional<User> userOptional = userRepository.findById(userID);
+        Optional<User> userOptional = userRepository.findByUserName(username);
         Optional<GameSystem> gameSystemOptional = gameSystemRepository.findById(gameSystemID);
 
         if (userOptional.isPresent() && gameSystemOptional.isPresent()) {

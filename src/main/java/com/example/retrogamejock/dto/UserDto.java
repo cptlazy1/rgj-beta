@@ -1,38 +1,22 @@
 package com.example.retrogamejock.dto;
 
 public class UserDto {
-    private Long userID;
+//    private Long userID;
     private String userName;
-    private String password; // password shouldn't be in the output dto
+//    private String password; // password shouldn't be in the output dto
     private String email;
-    private String profilePrivate; // This is also not necessary in the output dto
+//    private String profilePrivate; // This is also not necessary in the output dto
 
-    // Default constructor
-    public UserDto() {
-    }
 
-    // Constructor
-    public UserDto(
-            Long userID,
-            String userName,
-            String password,
-            String email,
-            String profilePrivate) {
-        this.userID = userID;
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.profilePrivate = profilePrivate;
-    }
 
     // Getters and setters
-    public Long getUserID() {
-        return userID;
-    }
+//    public Long getUserID() {
+//        return userID;
+//    }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
-    }
+//    public void setUserID(Long userID) {
+//        this.userID = userID;
+//    }
 
     public String getUserName() {
         return userName;
@@ -42,13 +26,13 @@ public class UserDto {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public String getEmail() {
         return email;
@@ -58,11 +42,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getProfilePrivate() {
-        return profilePrivate;
-    }
+//    public String getProfilePrivate() {
+//        return profilePrivate;
+//    }
 
-    public void setProfilePrivate(String profilePrivate) {
-        this.profilePrivate = profilePrivate;
-    }
+//    public void setProfilePrivate(String profilePrivate) {
+//        this.profilePrivate = profilePrivate;
+//    }
 }

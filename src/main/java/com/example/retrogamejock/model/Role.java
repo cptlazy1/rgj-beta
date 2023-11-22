@@ -4,17 +4,16 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@IdClass(RoleKey.class)
+@IdClass(RoleKey.class) // This way we can use two primary keys. One for userName and one for role. See RoleKey.java
 @Table(name = "roles")
 public class Role implements Serializable {
 
-    @Id
+    @Id // Primary key nr.1
     @Column(nullable = false)
     private String userName;
-//    private String roleName;
 
 
-    @Id
+    @Id // Primary key nr.2
     @Column(nullable = false)
     private String role;
 

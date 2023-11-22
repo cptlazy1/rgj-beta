@@ -72,6 +72,8 @@ public class SecurityConfiguration {
                                 "/games/**").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT,
                                 "/game-systems/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,
+                                "/users/**").hasRole("USER")
                         .anyRequest().denyAll())
                         .sessionManagement(session -> session
                                 .sessionCreationPolicy(

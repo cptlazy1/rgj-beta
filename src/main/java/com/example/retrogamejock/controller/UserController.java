@@ -30,23 +30,30 @@ public class UserController {
     }
 
     // GetMapping to get user by userID
-    @GetMapping("/users/{id}")
-    public ResponseEntity<UserDto> getUserByUserID(@PathVariable("id") Long userID) {
-        UserDto userDto = userService.getUserByUserID(userID);
+//    @GetMapping("/users/{id}")
+//    public ResponseEntity<UserDto> getUserByUserID(@PathVariable("id") Long userID) {
+//        UserDto userDto = userService.getUserByUserID(userID);
+//        return ResponseEntity.ok(userDto);
+//    }
+
+    // GetMapping to get user by username
+    @GetMapping("/users/{username}")
+    public ResponseEntity<UserDto> getUserByUsername(@PathVariable("username") String username) {
+        UserDto userDto = userService.getUserByUserName(username);
         return ResponseEntity.ok(userDto);
     }
 
     // GetMapping to get users games by userID
-    @GetMapping("/users/{id}/games")
-    public ResponseEntity<List<GameDto>> getUsersGamesByUserID(@PathVariable("id") Long userID) {
-        List<GameDto> gameDTOs = userService.getUserGamesByUserID(userID);
+    @GetMapping("/users/{username}/games")
+    public ResponseEntity<List<GameDto>> getUsersGamesByUserID(@PathVariable("username") String username) {
+        List<GameDto> gameDTOs = userService.getUserGamesByUserName(username);
         return new ResponseEntity<>(gameDTOs, HttpStatus.OK);
     }
 
     // GetMapping to get users game systems by userID
-    @GetMapping("/users/{id}/game-systems")
-    public ResponseEntity<List<GameSystemDto>> getUsersGameSystemsByUserID(@PathVariable("id") Long userID) {
-        List<GameSystemDto> gameSytemDtos = userService.getUserGameSystemsByUserID(userID);
+    @GetMapping("/users/{username}/game-systems")
+    public ResponseEntity<List<GameSystemDto>> getUsersGameSystemsByUserID(@PathVariable("username") String username) {
+        List<GameSystemDto> gameSytemDtos = userService.getUserGameSystemsByUserName(username);
         return new ResponseEntity<>(gameSytemDtos, HttpStatus.OK);
     }
 
@@ -59,48 +66,48 @@ public class UserController {
 
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/users/{id}")
-                .buildAndExpand(userDto.getUserID())
+                .path("/users/{username}")
+                .buildAndExpand(userDto.getUserName())
                 .toUriString());
 
         return ResponseEntity.created(uri).body(userDto);
     }
 
     // DeleteMapping to delete user
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long userID) {
-        userService.deleteUser(userID);
+    @DeleteMapping("/users/{username}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("username") String username) {
+        userService.deleteUser(username);
         return ResponseEntity.noContent().build();
     }
 
     // PutMapping to update user
-    @PutMapping("/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userID, @Valid @RequestBody UserInputDto userInputDto) {
+    @PutMapping("/users/{username}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable("username") String username, @Valid @RequestBody UserInputDto userInputDto) {
 
-        UserDto userDto = userService.updateUser(userID, userInputDto);
+        UserDto userDto = userService.updateUser(username, userInputDto);
         return ResponseEntity.ok().body(userDto);
     }
 
 
     // PutMapping to assign game to user
-    @PutMapping("/users/{userID}/games/{gameID}")
-    public ResponseEntity<Object> assignGameToUser(@PathVariable("userID") Long userID, @PathVariable("gameID") Long gameID) {
-        userService.assignGameToUser(userID, gameID);
+    @PutMapping("/users/{username}/games/{gameID}")
+    public ResponseEntity<Object> assignGameToUser(@PathVariable("username") String username, @PathVariable("gameID") Long gameID) {
+        userService.assignGameToUser(username, gameID);
 
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/users/{userID}/games/{gameID}")
-                .buildAndExpand(userID, gameID)
+                .buildAndExpand(username, gameID)
                 .toUriString());
 
         return ResponseEntity.noContent().location(uri).build();
     }
 
     // PutMapping to assign game system to user
-    @PutMapping("/users/{userID}/game-systems/{gameSystemID}")
-    public ResponseEntity<String> assignGameSystemToUser(@PathVariable("userID") Long userID, @PathVariable("gameSystemID") Long gameSystemID) {
-        userService.assignGameSystemToUser(userID, gameSystemID);
-        return ResponseEntity.ok().body("Game system with the " + gameSystemID + " ID has been assigned to user with the " + userID + " ID.");
+    @PutMapping("/users/{username}/game-systems/{gameSystemID}")
+    public ResponseEntity<String> assignGameSystemToUser(@PathVariable("username") String username, @PathVariable("gameSystemID") Long gameSystemID) {
+        userService.assignGameSystemToUser(username, gameSystemID);
+        return ResponseEntity.ok().body("Game system with the " + gameSystemID + " ID has been assigned to user with the " + username + " ID.");
     }
 
 }
