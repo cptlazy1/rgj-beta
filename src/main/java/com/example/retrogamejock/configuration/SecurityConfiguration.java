@@ -1,48 +1,79 @@
 package com.example.retrogamejock.configuration;
 
+import com.example.retrogamejock.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // TODO: login needs to be implemented instead hardcoding users and admin
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        UserDetails user = User.withUsername("user")
-                .password(passwordEncoder
-                        .encode("password")).roles("USER").build();
-
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder
-                        .encode("admin")).roles("USER", "ADMIN").build();
-        manager.createUser(user);
-        manager.createUser(admin);
-        return manager;
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+        var auth = new DaoAuthenticationProvider();
+        auth.setPasswordEncoder(passwordEncoder);
+        auth.setUserDetailsService(customUserDetailsService);
+        return new ProviderManager(auth);
     }
+
+//    // TODO: login needs to be implemented instead hardcoding users and admin
+//    @Bean
+//    public CustomUserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+////        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        CustomUserDetailsService manager = new CustomUserDetailsService();
+//        UserDetails user = User.withUsername("user")
+//                .password(passwordEncoder
+//                        .encode("password")).roles("USER").build();
+//
+//        UserDetails admin = User.withUsername("admin")
+//                .password(passwordEncoder
+//                        .encode("admin")).roles("USER", "ADMIN").build();
+//        manager.createUser(user);
+//        manager.createUser(admin);
+//        return manager;
+//    }
+
+
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        UserDetails user = User.withUsername("user")
+//                .password(passwordEncoder
+//                        .encode("password")).roles("USER").build();
+//
+//        UserDetails admin = User.withUsername("admin")
+//                .password(passwordEncoder
+//                        .encode("admin")).roles("USER", "ADMIN").build();
+//        manager.createUser(user);
+//        manager.createUser(admin);
+//        return manager;
+//    }
 
 //    @Bean
 //    public AuthenticationManager authenticationManager() {
