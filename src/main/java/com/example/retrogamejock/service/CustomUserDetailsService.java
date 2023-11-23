@@ -27,22 +27,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userService = userService;
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) {
-//        UserDto userDto = userService.getUserByUserName(username);
-//        String password = userDto.getPassword();
-//        Set<Role> roles = userDto.getRoles();
-//        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-//        for (Role role : roles) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
-//        }
-//        return new User(username, password, grantedAuthorities);
-//    }
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserInputDto userInputDto = userService.getUserByUserName(username);
-        String password = userInputDto.getPassword();
-        Set<Role> roles = userInputDto.getRoles();
+        UserDto userDto = userService.getUserByUserName(username);
+        String password = userDto.getPassword();
+        Set<Role> roles = userDto.getRoles();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Role role : roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));

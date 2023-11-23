@@ -7,6 +7,7 @@ import com.example.retrogamejock.dto.UserInputDto;
 import com.example.retrogamejock.exception.RecordNotFoundException;
 import com.example.retrogamejock.model.Game;
 import com.example.retrogamejock.model.GameSystem;
+import com.example.retrogamejock.model.Role;
 import com.example.retrogamejock.model.User;
 import com.example.retrogamejock.repository.GameRepository;
 import com.example.retrogamejock.repository.GameSystemRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -60,12 +62,24 @@ public class UserService {
 
 
     // Method to get user by userName
-    public UserInputDto getUserByUserName(String userName) {
+//    public UserInputDto getUserByUserName(String userName) {
+//        Optional<User> userOptional = userRepository.findByUserName(userName);
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+////            return convertToUserDto(user);
+//            return convertToUserInputDto(user);
+//        } else {
+//            throw new RecordNotFoundException("No user record exists for given userName");
+//        }
+//
+//    }
+
+    // Method to get user by userName
+    public UserDto getUserByUserName(String userName) {
         Optional<User> userOptional = userRepository.findByUserName(userName);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-//            return convertToUserDto(user);
-            return convertToUserInputDto(user);
+            return convertToUserDto(user);
         } else {
             throw new RecordNotFoundException("No user record exists for given userName");
         }
@@ -180,6 +194,52 @@ public class UserService {
     public UserInputDto convertToUserInputDto(User user) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, UserInputDto.class);
+    }
+
+    // Method to get roles by userName
+    public Set<Role> getRolesByUserName(String userName) {
+
+        Optional<User> userOptional = userRepository.findByUserName(userName);
+
+        if (userOptional.isPresent()) {
+            return userOptional.get().getRoles();
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userName");
+        }
+    }
+
+    // Method to add role to user
+    public void addRole(String username, String role) {
+
+        Optional<User> userOptional = userRepository.findByUserName(username);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.addRole(new Role(username, role));
+            userRepository.save(user);
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userName");
+        }
+    }
+
+    // Method to remove role from user
+    public void removeRole(String username, String role) {
+
+        Optional<User> userOptional = userRepository.findByUserName(username);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Role roleToRemove = user
+                    .getRoles()
+                    .stream()
+                    .filter(r -> r.getRole().equals(role))
+                    .findAny()
+                    .get();
+            user.removeRole(roleToRemove);
+            userRepository.save(user);
+        } else {
+            throw new RecordNotFoundException("No user record exists for given userName");
+        }
     }
 
 

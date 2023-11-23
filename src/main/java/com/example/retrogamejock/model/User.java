@@ -9,16 +9,14 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-
-//    @GeneratedValue
-//    @Column(name = "user_id")
-//    Long userID;
-
     @Id
     @Column(nullable = false, unique = true)
     private String userName;
+    @Column(nullable = false, length = 255)
     private String password;
+    @Column
     private String email;
+    @Column(nullable = false)
     private String profilePrivate = "true";
 
     @OneToMany(
@@ -34,7 +32,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GameSystem> gameSystems;
-
 
 
     // Getters and setters
@@ -70,10 +67,6 @@ public class User {
         this.profilePrivate = profilePrivate;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
@@ -92,6 +85,13 @@ public class User {
 
     public void setGameSystems(List<GameSystem> gameSystems) {
         this.gameSystems = gameSystems;
+    }
+
+    // Role methods section:
+
+    // Method to get roles
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     // Method to add a role

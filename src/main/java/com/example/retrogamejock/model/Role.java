@@ -18,20 +18,15 @@ public class Role implements Serializable {
     private String role;
 
     // Default constructor
-    public Role() {
-    }
-
+    public Role() { }
 
     // Constructor with all fields
-    public Role(
-            String userName,
-            String role) {
+    public Role(String userName, String role) {
         this.userName = userName;
         this.role = role;
     }
 
     // Getters and setters
-
     public String getUserName() {
         return userName;
     }

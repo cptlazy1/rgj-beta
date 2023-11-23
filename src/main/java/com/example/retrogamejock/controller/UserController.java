@@ -22,7 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // GetMapping to get all users
+    // GetMapping to get all users - Only Admin access
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userDtos = userService.getAllUsers();
@@ -33,7 +33,7 @@ public class UserController {
     // GetMapping to get user by username
     @GetMapping("/users/{username}")
     public ResponseEntity<String> getUserByUsername(@PathVariable("username") String username) {
-        UserInputDto userInputDto = userService.getUserByUserName(username);
+        UserDto userDto = userService.getUserByUserName(username);
         return ResponseEntity.ok("User with the " + username + " username has been found.");
     }
 
@@ -53,10 +53,26 @@ public class UserController {
 
 
     // PostMapping to add user
+//    @PostMapping("/users")
+//    public ResponseEntity<Object> addUser(@Valid @RequestBody UserInputDto userInputDto) {
+//
+//        UserDto userDto = userService.addUser(userInputDto);
+//
+//        URI uri = URI.create(ServletUriComponentsBuilder
+//                .fromCurrentContextPath()
+//                .path("/users/{username}")
+//                .buildAndExpand(userDto.getUserName())
+//                .toUriString());
+//
+//        return ResponseEntity.created(uri).body(userDto);
+//    }
+
+    // PostMapping to add user
     @PostMapping("/users")
     public ResponseEntity<Object> addUser(@Valid @RequestBody UserInputDto userInputDto) {
 
         UserDto userDto = userService.addUser(userInputDto);
+        userService.addRole(userDto.getUserName(), "ROLE_USER");
 
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
