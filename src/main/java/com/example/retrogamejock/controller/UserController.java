@@ -4,25 +4,31 @@ import com.example.retrogamejock.dto.GameDto;
 import com.example.retrogamejock.dto.GameSystemDto;
 import com.example.retrogamejock.dto.UserDto;
 import com.example.retrogamejock.dto.UserInputDto;
+import com.example.retrogamejock.model.Role;
+import com.example.retrogamejock.model.User;
 import com.example.retrogamejock.service.UserService;
 import jakarta.validation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
-
+@CrossOrigin
 @RestController
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    // GetMapping to get all users - Only Admin access
+    // GetMapping to get all users
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userDtos = userService.getAllUsers();
@@ -31,10 +37,17 @@ public class UserController {
 
 
     // GetMapping to get user by username
+//    @GetMapping("/users/{username}")
+//    public ResponseEntity<String> getUserByUsername(@PathVariable("username") String username) {
+//        UserDto userDto = userService.getUserByUserName(username);
+//        return ResponseEntity.ok("User with the " + username + " username has been found.");
+//    }
+
+    // GetMapping to get user by username
     @GetMapping("/users/{username}")
-    public ResponseEntity<String> getUserByUsername(@PathVariable("username") String username) {
+    public ResponseEntity<UserDto> getUserByUsername(@PathVariable("username") String username) {
         UserDto userDto = userService.getUserByUserName(username);
-        return ResponseEntity.ok("User with the " + username + " username has been found.");
+        return ResponseEntity.ok(userDto);
     }
 
     // GetMapping to get users games by username
@@ -52,26 +65,12 @@ public class UserController {
     }
 
 
-    // PostMapping to add user
-//    @PostMapping("/users")
-//    public ResponseEntity<Object> addUser(@Valid @RequestBody UserInputDto userInputDto) {
-//
-//        UserDto userDto = userService.addUser(userInputDto);
-//
-//        URI uri = URI.create(ServletUriComponentsBuilder
-//                .fromCurrentContextPath()
-//                .path("/users/{username}")
-//                .buildAndExpand(userDto.getUserName())
-//                .toUriString());
-//
-//        return ResponseEntity.created(uri).body(userDto);
-//    }
-
-    // PostMapping to add user
+     // PostMapping to add user
     @PostMapping("/users")
-    public ResponseEntity<Object> addUser(@Valid @RequestBody UserInputDto userInputDto) {
+    public ResponseEntity<Object> addUser(@Valid @RequestBody UserDto dto) {
 
-        UserDto userDto = userService.addUser(userInputDto);
+        UserDto userDto = userService.addUser(dto);
+        userDto.setPassword(passwordEncoder.encode(dto.getPassword()));
         userService.addRole(userDto.getUserName(), "ROLE_USER");
 
         URI uri = URI.create(ServletUriComponentsBuilder
@@ -82,6 +81,8 @@ public class UserController {
 
         return ResponseEntity.created(uri).body(userDto);
     }
+
+
 
     // DeleteMapping to delete user
     @DeleteMapping("/users/{username}")

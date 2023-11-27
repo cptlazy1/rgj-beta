@@ -5,15 +5,17 @@ import com.example.retrogamejock.model.Role;
 import java.util.Set;
 
 public class UserDto {
-//    private Long userID;
-    private String userName;
-    private String password; // password shouldn't be in the output dto
-    private String email;
-//    private String profilePrivate; // This is also not necessary in the output dto
 
+    public String userName;
+    public String password;
+    public String email;
+    public String profilePrivate;
     public Set<Role> roles;
 
+    public String apikey;
+
    //  Getters and setters
+
     public String getUserName() {
         return userName;
     }
@@ -38,13 +40,13 @@ public class UserDto {
         this.email = email;
     }
 
-//    public String getProfilePrivate() {
-//        return profilePrivate;
-//    }
+    public String getProfilePrivate() {
+        return profilePrivate;
+    }
 
-//    public void setProfilePrivate(String profilePrivate) {
-//        this.profilePrivate = profilePrivate;
-//    }
+    public void setProfilePrivate(String profilePrivate) {
+        this.profilePrivate = profilePrivate;
+    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -52,5 +54,13 @@ public class UserDto {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getApikey() {
+        return apikey;
+    }
+
+    public void setApikey(String apikey) {
+        this.apikey = apikey;
     }
 }

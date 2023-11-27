@@ -8,13 +8,13 @@
 
 -- Users
 INSERT INTO users (user_name, password, email, profile_private)
-VALUES ('cptlazy', 'password', 'cpt@lazy.com', true);
+VALUES ('cptlazy', '$2a$12$IzA1Ja1LH4PSMoro9PeITO1etDlknPjSX1nLusgt1vi9c1uaEXdEK', 'cpt@lazy.com', true);
 
 INSERT INTO users (user_name, password, email, profile_private)
-VALUES ('powerpuff', 'password', 'pp@lazy.com', true);
+VALUES ('powerpuff', '$2a$12$IzA1Ja1LH4PSMoro9PeITO1etDlknPjSX1nLusgt1vi9c1uaEXdEK', 'pp@lazy.com', true);
 
 INSERT INTO users (user_name, password, email, profile_private)
-VALUES ('haze', 'password', 'haze@lazy.com', true);
+VALUES ('haze', '$2a$12$IzA1Ja1LH4PSMoro9PeITO1etDlknPjSX1nLusgt1vi9c1uaEXdEK', 'haze@lazy.com', true);
 
 --  Game systems
 INSERT INTO game_systems (game_system_name, game_system_review, game_system_rating)
@@ -55,3 +55,10 @@ VALUES (true, false, true);
 
 INSERT INTO game_system_conditions (box, cables, modified)
 VALUES (true, true, false);
+
+INSERT INTO roles (user_name, role)
+VALUES ('cptlazy', 'USER');
+INSERT INTO roles (user_name, role)
+VALUES ('powerpuff', 'USER');
+INSERT INTO roles (user_name, role)
+VALUES ('haze', 'ADMIN');

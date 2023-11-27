@@ -1,5 +1,6 @@
 package com.example.retrogamejock.configuration;
 
+import com.example.retrogamejock.filter.JwtRequestFilter;
 import com.example.retrogamejock.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +17,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
     private final CustomUserDetailsService customUserDetailsService;
+    private final JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.customUserDetailsService = customUserDetailsService;
+        this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Bean
@@ -33,7 +37,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) throws Exception {
         var auth = new DaoAuthenticationProvider();
         auth.setPasswordEncoder(passwordEncoder);
         auth.setUserDetailsService(customUserDetailsService);
@@ -43,33 +47,29 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.httpBasic(Customizer.withDefaults()).authorizeHttpRequests(
+        http
+                .csrf(csrf -> csrf.disable())
+                .httpBasic(basic -> basic.disable())
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(
                 auth -> auth
-                        .requestMatchers(HttpMethod.GET,
-                                "/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,
-                                "/games/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET,
-                                "/game-systems/**").hasRole("USER")
+//                        .requestMatchers("/**").permitAll() // TODO: remove this line because all endpoints are now open
+                        .requestMatchers("/authenticated").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/authenticate").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/users").permitAll()
-                        .requestMatchers(HttpMethod.POST,
-                                "/games/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST,
-                                "/game-systems/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT,
-                                "/users/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT,
-                                "/games/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT,
-                                "/game-systems/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,
+                                "/users/{username}/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,
                                 "/users/**").hasRole("USER")
                         .anyRequest().denyAll())
                         .sessionManagement(session -> session
                                 .sessionCreationPolicy(
-                                        SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable);
+                                        SessionCreationPolicy.STATELESS));
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

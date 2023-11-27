@@ -12,6 +12,7 @@ import com.example.retrogamejock.model.User;
 import com.example.retrogamejock.repository.GameRepository;
 import com.example.retrogamejock.repository.GameSystemRepository;
 import com.example.retrogamejock.repository.UserRepository;
+import com.example.retrogamejock.utility.RandomStringGenerator;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -75,15 +76,29 @@ public class UserService {
 //    }
 
     // Method to get user by userName
+//    public UserDto getUserByUserName(String userName) {
+//        Optional<User> userOptional = userRepository.findByUserName(userName);
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            return convertToUserDto(user);
+//        } else {
+//            throw new RecordNotFoundException("No user record exists for given userName");
+//        }
+//
+//    }
+
+    // Method to get user by userName
     public UserDto getUserByUserName(String userName) {
+
+        UserDto userDto = new UserDto();
         Optional<User> userOptional = userRepository.findByUserName(userName);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return convertToUserDto(user);
+            userDto = convertToUserDto(user);
         } else {
             throw new RecordNotFoundException("No user record exists for given userName");
         }
-
+        return userDto;
     }
 
 
@@ -126,9 +141,11 @@ public class UserService {
 
 
     // Method to add user
-    public UserDto addUser(UserInputDto userInputDto) {
+    public UserDto addUser(UserDto userDto) {
 
-        User user = convertToUser(userInputDto);
+        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
+        userDto.setApikey(randomString);
+        User user = convertToUser(userDto);
         User savedUser = userRepository.save(user);
 
         return convertToUserDto(savedUser);
@@ -177,9 +194,9 @@ public class UserService {
 
 
     // Method to convert UserInputDto to User using ModelMapper
-    public User convertToUser(UserInputDto userInputDto) {
+    public User convertToUser(UserDto userDto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(userInputDto, User.class);
+        return modelMapper.map(userDto, User.class);
     }
 
 

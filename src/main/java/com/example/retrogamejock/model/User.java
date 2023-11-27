@@ -18,6 +18,8 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String profilePrivate = "true";
+    @Column
+    private String apikey;
 
     @OneToMany(
             targetEntity = Role.class,
@@ -32,6 +34,16 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GameSystem> gameSystems;
+
+    // Method to add a role to a user
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    // Method to remove a role from a user
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+    }
 
 
     // Getters and setters
@@ -67,8 +79,8 @@ public class User {
         this.profilePrivate = profilePrivate;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     public List<Game> getGames() {
@@ -87,20 +99,11 @@ public class User {
         this.gameSystems = gameSystems;
     }
 
-    // Role methods section:
-
-    // Method to get roles
-    public Set<Role> getRoles() {
-        return roles;
+    public String getApikey() {
+        return apikey;
     }
 
-    // Method to add a role
-    public void addRole(Role role) {
-        this.roles.add(role);
-    }
-
-    // Method to remove a role
-    public void removeRole(Role role) {
-        this.roles.remove(role);
+    public void setApikey(String apikey) {
+        this.apikey = apikey;
     }
 }
